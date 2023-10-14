@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "math-facts",
+    "name": "Math Facts",
     "slug": "math-facts",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "mathfacts",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -16,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.math-facts"
     },
     "android": {
       "adaptiveIcon": {
