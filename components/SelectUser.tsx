@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 
-import { MonoText } from './StyledText';
+import { MonoText } from './library/StyledText';
 import { Text, View } from './library/Themed';
 import InlineTitle from './library/InlineTitle';
 

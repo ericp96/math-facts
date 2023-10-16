@@ -4,9 +4,10 @@ import { View } from '../components/library/Themed';
 import { Problem } from '../constants/Types';
 import { useFetchProblem } from '../hooks/useFetchProblem';
 import { getOperatorSymbol } from '../utils/problemUtils';
-import { MonoText } from '../components/StyledText';
+import { MonoText } from '../components/library/StyledText';
 import WrongAnswer from '../components/WrongAnswer';
 import RightAnswer from '../components/RightAnswer';
+import SubmitButton from '../components/library/SubmitButton';
 
 enum AnswerState {
   Pending = 'pending',
@@ -83,9 +84,11 @@ export default function Practice() {
         />
       </View>
       <InputAccessoryView nativeID={inputAccessoryViewID}>
-        <Pressable style={styles.answerButton} onPress={onCheck} disabled={answerState !== AnswerState.Pending}>
-          <Text style={styles.answerButtonText}>Check ✅</Text>
-        </Pressable>
+        <View style={styles.answerButton}>
+          <SubmitButton onPress={onCheck} disabled={answerState !== AnswerState.Pending}>
+            Check ✅
+          </SubmitButton>
+        </View>
       </InputAccessoryView>
     </View>
   );
@@ -94,9 +97,8 @@ export default function Practice() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'stretch',
-    paddingTop: '25%',
+    paddingTop: 20,
     alignContent: 'center',
-    // backgroundColor: '#ffffff',
     height: '100%',
   },
   answerOverlay: {
@@ -146,15 +148,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   answerButton: {
-    //  lightColor="#855797" darkColor="#855797"
-    backgroundColor: '#855797',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-  },
-  answerButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    paddingHorizontal: 10,
   },
 });

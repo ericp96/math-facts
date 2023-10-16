@@ -1,7 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack, router } from 'expo-router';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { RealmProvider } from '@realm/react';
@@ -54,7 +54,14 @@ function RootLayoutNav() {
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="practice" options={{ title: 'Practice' }} />
           {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
-          <Stack.Screen name="settings" options={{ fullScreenGestureEnabled: true, title: 'Settings' }} />
+          <Stack.Screen
+            name="settings"
+            options={{
+              headerBackVisible: true,
+              fullScreenGestureEnabled: true,
+              title: 'Settings',
+            }}
+          />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         </Stack>
       </ThemeProvider>

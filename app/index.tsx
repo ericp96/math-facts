@@ -4,7 +4,7 @@ import { View } from '../components/library/Themed';
 import LottieView from 'lottie-react-native';
 import InlineTitle from '../components/library/InlineTitle';
 import React from 'react';
-import { MonoText } from '../components/StyledText';
+import { MonoText } from '../components/library/StyledText';
 import { router } from 'expo-router';
 import { useQuery } from '@realm/react';
 import { UserConfig } from '../models/UserConfigModel';
@@ -33,7 +33,7 @@ export default function Home() {
 
       <TouchableOpacity
         onPress={() => {
-          router.replace('/practice');
+          router.push('/practice');
         }}
         style={styles.gameButton}
       >
@@ -56,7 +56,7 @@ export default function Home() {
 
       <TouchableOpacity
         onPress={() => {
-          router.replace('/settings');
+          router.push('/settings');
         }}
         style={styles.linkButton}
       >
