@@ -6,8 +6,12 @@ import InlineTitle from '../components/library/InlineTitle';
 import React from 'react';
 import { MonoText } from '../components/StyledText';
 import { router } from 'expo-router';
+import { useQuery } from '@realm/react';
+import { UserConfig } from '../models/UserConfigModel';
 
 export default function Home() {
+  const [userConfig] = useQuery(UserConfig) || [];
+
   return (
     // @ts-expect-error
     <LottieView
@@ -18,7 +22,7 @@ export default function Home() {
       resizeMode="cover"
     >
       <InlineTitle lightColor="#855797" darkColor="#855797">
-        Hi, Matthew.
+        Hi, {userConfig?.name || 'Kid'}.
       </InlineTitle>
 
       <MonoText lightColor="#000" darkColor="#000">
@@ -50,7 +54,12 @@ export default function Home() {
         </MonoText>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {}} style={styles.linkButton}>
+      <TouchableOpacity
+        onPress={() => {
+          router.replace('/settings');
+        }}
+        style={styles.linkButton}
+      >
         <MonoText lightColor="#000" darkColor="#000">
           Settings
         </MonoText>

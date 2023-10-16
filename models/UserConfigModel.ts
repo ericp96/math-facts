@@ -1,18 +1,13 @@
 import Realm, { ObjectSchema } from 'realm';
 
-export class OperatorConfig extends Realm.Object<OperatorConfig> {
+export class UserConfig extends Realm.Object<UserConfig> {
   _id!: Realm.BSON.ObjectId;
   name!: string;
   static schema: ObjectSchema = {
-    name: 'OperatorConfig',
+    name: 'UserConfig',
     properties: {
       _id: 'objectId',
       name: 'string',
-      // Fix me
-      numbersToGenerate: 'int',
-      operator: 'string',
-      minNumber: 'int',
-      maxNumber: 'int',
     },
     primaryKey: '_id',
   };
