@@ -2,11 +2,12 @@ import { StyleSheet, Switch, Text } from 'react-native';
 import { View } from '../library/Themed';
 import { useState } from 'react';
 import OperatorSettingsWrapper from './OperatorSettingsWrapper';
+import { OperatorSettingProps } from './types';
 
-export default function OperatorDivisionSettings() {
-  const [isEnabled, setEnabled] = useState(false);
+export default function OperatorDivisionSettings({ enabled, config }: OperatorSettingProps) {
+  const [isEnabled, setEnabled] = useState(enabled);
   return (
-    <OperatorSettingsWrapper title="Division">
+    <OperatorSettingsWrapper defaultExpanded={enabled} title="Division">
       <View style={styles.toggleWrapper}>
         <Text style={styles.label}>Enabled</Text>
         <Switch onValueChange={() => setEnabled(!isEnabled)} value={isEnabled} />

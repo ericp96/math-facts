@@ -2,8 +2,16 @@ import { StyleSheet, Pressable, Text } from 'react-native';
 import { View } from '../library/Themed';
 import { useState } from 'react';
 
-export default function OperatorSettingsWrapper({ title, children }: { title: string; children: any }) {
-  const [isExpanded, setExpanded] = useState(false);
+export default function OperatorSettingsWrapper({
+  title,
+  defaultExpanded,
+  children,
+}: {
+  title: string;
+  defaultExpanded: boolean;
+  children: any;
+}) {
+  const [isExpanded, setExpanded] = useState(defaultExpanded);
   return (
     <View style={styles.container}>
       <Pressable style={styles.headerPressable} onPress={() => setExpanded(!isExpanded)}>

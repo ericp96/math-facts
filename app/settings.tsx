@@ -12,6 +12,12 @@ import OperatorMultiplicationSettings from '../components/settings/OperatorMulti
 import OperatorDivisionSettings from '../components/settings/OperatorDivisionSettings';
 import { OperatorConfig } from '../models/OperatorConfigModel';
 import { Operator } from '../constants/Enum';
+import Realm, { BSON } from 'realm';
+
+function useSelectOperatorConfig(configs: Realm.Results<OperatorConfig>, operator: Operator) {
+  const [config] = configs.filtered('$0 == operator', operator);
+  return config;
+}
 
 export default function SettingsScreen() {
   const realm = useRealm();
@@ -19,10 +25,14 @@ export default function SettingsScreen() {
   const [input, setInput] = useState(userConfig?.name);
 
   const operatorConfigs = useQuery(OperatorConfig);
-  const [additionConfig] = operatorConfigs.filtered('$0 == operator', Operator.Addition);
-  const [subtractionConfig] = operatorConfigs.filtered('$0 == operator', Operator.Subtraction);
-  const [multiplicationConfig] = operatorConfigs.filtered('$0 == operator', Operator.Multiplication);
-  const [divisionConfig] = operatorConfigs.filtered('$0 == operator', Operator.Division);
+  const { config: additionConfig, enabled: additionEnabled } =
+    useSelectOperatorConfig(operatorConfigs, Operator.Addition) || {};
+  const { config: subtractionConfig, enabled: subtractionEnabled } =
+    useSelectOperatorConfig(operatorConfigs, Operator.Subtraction) || {};
+  const { config: multiplicationConfig, enabled: multiplicationEnabled } =
+    useSelectOperatorConfig(operatorConfigs, Operator.Multiplication) || {};
+  const { config: divisionConfig, enabled: divisionEnabled } =
+    useSelectOperatorConfig(operatorConfigs, Operator.Division) || {};
 
   const saveName = useCallback(() => {
     if (userConfig != null) {
@@ -31,7 +41,7 @@ export default function SettingsScreen() {
       });
     } else {
       realm.write(() => {
-        realm.create('UserConfig', { _id: new Realm.BSON.ObjectID(), name: input });
+        realm.create('UserConfig', { _id: new BSON.ObjectID(), name: input });
       });
     }
     router.back();
@@ -42,10 +52,10 @@ export default function SettingsScreen() {
       <Text style={styles.label}>Name</Text>
       <TextInput style={styles.textBox} editable onChangeText={(text) => setInput(text)} value={input} />
 
-      <OperatorAdditionSettings config={additionConfig} />
-      <OperatorSubtractionSettings config={subtractionConfig} />
-      <OperatorMultiplicationSettings config={multiplicationConfig} />
-      <OperatorDivisionSettings config={divisionConfig} />
+      <OperatorAdditionSettings enabled={additionEnabled} config={additionConfig} />
+      <OperatorSubtractionSettings enabled={subtractionEnabled} config={subtractionConfig} />
+      <OperatorMultiplicationSettings enabled={multiplicationEnabled} config={multiplicationConfig} />
+      <OperatorDivisionSettings enabled={divisionEnabled} config={divisionConfig} />
 
       <SubmitButton onPress={saveName}>Save</SubmitButton>
     </View>

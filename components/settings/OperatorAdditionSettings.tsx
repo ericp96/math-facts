@@ -2,11 +2,12 @@ import { StyleSheet, Switch, Text } from 'react-native';
 import { View } from '../library/Themed';
 import { useState } from 'react';
 import OperatorSettingsWrapper from './OperatorSettingsWrapper';
+import { OperatorSettingProps } from './types';
 
-export default function OperatorAdditionSettings() {
-  const [isEnabled, setEnabled] = useState(false);
+export default function OperatorAdditionSettings({ enabled, config }: OperatorSettingProps) {
+  const [isEnabled, setEnabled] = useState(enabled);
   return (
-    <OperatorSettingsWrapper title="Addition">
+    <OperatorSettingsWrapper defaultExpanded={enabled} title="Addition">
       <View style={styles.toggleWrapper}>
         <Text style={styles.label}>Enabled</Text>
         <Switch onValueChange={() => setEnabled(!isEnabled)} value={isEnabled} />

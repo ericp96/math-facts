@@ -48,7 +48,7 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <RealmProvider schema={[UserConfig, OperatorConfig]} schemaVersion={1}>
+    <RealmProvider schema={[UserConfig, OperatorConfig]} schemaVersion={1} deleteRealmIfMigrationNeeded={true}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack initialRouteName="index">
           <Stack.Screen name="index" options={{ headerShown: false }} />

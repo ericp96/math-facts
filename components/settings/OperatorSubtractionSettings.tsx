@@ -2,11 +2,12 @@ import { StyleSheet, Switch, Text } from 'react-native';
 import { View } from '../library/Themed';
 import { useState } from 'react';
 import OperatorSettingsWrapper from './OperatorSettingsWrapper';
+import { OperatorSettingProps } from './types';
 
-export default function OperatorSubtractionSettings() {
-  const [isEnabled, setEnabled] = useState(false);
+export default function OperatorSubtractionSettings({ enabled, config }: OperatorSettingProps) {
+  const [isEnabled, setEnabled] = useState(enabled);
   return (
-    <OperatorSettingsWrapper title="Subtraction">
+    <OperatorSettingsWrapper defaultExpanded={enabled} title="Subtraction">
       <View style={styles.toggleWrapper}>
         <Text style={styles.label}>Enabled</Text>
         <Switch onValueChange={() => setEnabled(!isEnabled)} value={isEnabled} />
