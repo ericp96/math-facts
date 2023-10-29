@@ -25,7 +25,8 @@ function getComponent(operator: Operator) {
 
 export default function OperatorSettings({ operator }: { operator: Operator }) {
   const operatorConfigs = useQuery(OperatorConfig);
-  const [{ config, enabled }] = operatorConfigs.filtered('$0 == operator', operator) || [{}];
+  const [row] = operatorConfigs.filtered('$0 == operator', operator) || [];
+  const { config, enabled } = row || {};
 
   const Component = useMemo(() => getComponent(operator), [operator]);
 

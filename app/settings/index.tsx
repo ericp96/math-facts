@@ -4,15 +4,7 @@ import { View } from '../../components/library/Themed';
 import { useQuery } from '@realm/react';
 import { UserConfig } from '../../models/UserConfigModel';
 import { router } from 'expo-router';
-import { OperatorConfig } from '../../models/OperatorConfigModel';
-import { Operator } from '../../constants/Enum';
-import Realm from 'realm';
 import { MonoText } from '../../components/library/StyledText';
-
-function useSelectOperatorConfig(configs: Realm.Results<OperatorConfig>, operator: Operator) {
-  const [config] = configs.filtered('$0 == operator', operator);
-  return config;
-}
 
 export default function SettingsMenuScreen() {
   const [userConfig] = useQuery(UserConfig);
@@ -37,7 +29,7 @@ export default function SettingsMenuScreen() {
         onPress={() => {
           router.push('/settings/addition');
         }}
-        style={styles.gameButton}
+        style={styles.button}
       >
         <MonoText lightColor="#000" darkColor="#000">
           Addition
@@ -48,7 +40,7 @@ export default function SettingsMenuScreen() {
         onPress={() => {
           router.push('/settings/subtraction');
         }}
-        style={styles.gameButton}
+        style={styles.button}
       >
         <MonoText lightColor="#000" darkColor="#000">
           Subtraction
@@ -59,7 +51,7 @@ export default function SettingsMenuScreen() {
         onPress={() => {
           router.push('/settings/multiplication');
         }}
-        style={styles.gameButton}
+        style={styles.button}
       >
         <MonoText lightColor="#000" darkColor="#000">
           Multiplication
@@ -70,7 +62,7 @@ export default function SettingsMenuScreen() {
         onPress={() => {
           router.push('/settings/division');
         }}
-        style={styles.gameButton}
+        style={styles.button}
       >
         <MonoText lightColor="#000" darkColor="#000">
           Division
@@ -108,13 +100,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
-  gameButton: {
+  button: {
     padding: 15,
     margin: 10,
     borderWidth: 1,
     borderColor: '#855797',
     borderRadius: 10,
-    width: '70%',
     backgroundColor: '#b2cdf7',
     alignItems: 'center',
   },

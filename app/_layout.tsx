@@ -44,6 +44,8 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+const backSettings = { headerBackVisible: true, fullScreenGestureEnabled: true };
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
@@ -52,16 +54,24 @@ function RootLayoutNav() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack initialRouteName="index">
           <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="practice" options={{ title: 'Practice' }} />
+          <Stack.Screen name="practice" options={{ ...backSettings, title: 'Practice' }} />
           {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
           <Stack.Screen
             name="settings"
             options={{
-              headerBackVisible: true,
-              fullScreenGestureEnabled: true,
+              ...backSettings,
               title: 'Settings',
             }}
           />
+          <Stack.Screen name="settings/profile" options={{ ...backSettings, title: 'User Information' }} />
+          <Stack.Screen name="settings/addition" options={{ ...backSettings, title: 'Addition Settings' }} />
+          <Stack.Screen name="settings/subtraction" options={{ ...backSettings, title: 'Subtraction Settings' }} />
+          <Stack.Screen name="settings/division" options={{ ...backSettings, title: 'Division Settings' }} />
+          <Stack.Screen
+            name="settings/multiplication"
+            options={{ ...backSettings, title: 'Multiplication Settings' }}
+          />
+
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         </Stack>
       </ThemeProvider>
