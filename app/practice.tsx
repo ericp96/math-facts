@@ -133,11 +133,8 @@ const styles = StyleSheet.create({
     marginHorizontal: '15%',
     width: '70%',
     justifyContent: 'space-between',
-    // backgroundColor: '#ffffff',
   },
   mathNumber: {
-    // color: '#000',
-    // backgroundColor: '#ffffff',
     textAlign: 'right',
     fontSize: 80,
   },

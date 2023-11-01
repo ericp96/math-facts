@@ -59,17 +59,8 @@ function RootLayoutNav() {
           <Stack.Screen
             name="settings"
             options={{
-              ...backSettings,
-              title: 'Settings',
+              headerShown: false,
             }}
-          />
-          <Stack.Screen name="settings/profile" options={{ ...backSettings, title: 'User Information' }} />
-          <Stack.Screen name="settings/addition" options={{ ...backSettings, title: 'Addition Settings' }} />
-          <Stack.Screen name="settings/subtraction" options={{ ...backSettings, title: 'Subtraction Settings' }} />
-          <Stack.Screen name="settings/division" options={{ ...backSettings, title: 'Division Settings' }} />
-          <Stack.Screen
-            name="settings/multiplication"
-            options={{ ...backSettings, title: 'Multiplication Settings' }}
           />
 
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
