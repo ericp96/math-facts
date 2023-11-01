@@ -23,6 +23,6 @@ export function getOperatorSymbol(operator: Operator): OperatorSymbol {
     case Operator.Multiplication:
       return 'x';
     case Operator.Division:
-      return '/';
+      return '÷';
   }
 }

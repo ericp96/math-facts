@@ -8,4 +8,4 @@ export type Problem = {
 
 export type GetProblem = () => Problem;
 
-export type OperatorSymbol = '+' | '-' | 'x' | '/';
+export type OperatorSymbol = '+' | '-' | 'x' | '÷';

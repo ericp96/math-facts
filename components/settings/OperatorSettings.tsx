@@ -1,14 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 import { View } from '../../components/library/Themed';
-import { useMemo } from 'react';
-import { useQuery } from '@realm/react';
+import { useCallback, useMemo } from 'react';
+import { useQuery, useRealm } from '@realm/react';
+import { router } from 'expo-router';
 import OperatorAdditionSettings from './OperatorAdditionSettings';
 import OperatorSubtractionSettings from './OperatorSubtractionSettings';
 import OperatorMultiplicationSettings from './OperatorMultiplicationSettings';
 import OperatorDivisionSettings from './OperatorDivisionSettings';
 import { OperatorConfig } from '../../models/OperatorConfigModel';
 import { Operator } from '../../constants/Enum';
+import { BSON } from 'realm';
 
 function getComponent(operator: Operator) {
   switch (operator) {
@@ -24,15 +26,33 @@ function getComponent(operator: Operator) {
 }
 
 export default function OperatorSettings({ operator }: { operator: Operator }) {
+  const realm = useRealm();
   const operatorConfigs = useQuery(OperatorConfig);
-  const [row] = operatorConfigs.filtered('$0 == operator', operator) || [];
-  const { config, enabled } = row || {};
+  const [operatorConfig] = operatorConfigs.filtered('$0 == operator', operator) || [];
+  const { config, enabled } = operatorConfig || {};
 
   const Component = useMemo(() => getComponent(operator), [operator]);
 
+  const updateSettings = useCallback(
+    (_enabled: boolean, _config: any) => {
+      if (operatorConfig != null) {
+        realm.write(() => {
+          operatorConfig.enabled = _enabled;
+          operatorConfig.config = _config;
+        });
+      } else {
+        realm.write(() => {
+          realm.create('OperatorConfig', { _id: new BSON.ObjectID(), enabled: _enabled, config: _config });
+        });
+      }
+      router.back();
+    },
+    [realm, operatorConfig]
+  );
+
   return (
     <View style={styles.container}>
-      <Component enabled={enabled} config={config} />
+      <Component enabled={enabled} config={config} update={updateSettings} />
     </View>
   );
 }
