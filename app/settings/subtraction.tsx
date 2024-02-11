@@ -8,7 +8,6 @@ import { MonoTitle } from '../../components/library/StyledText';
 export default function SettingsSubtractionScreen() {
   return (
     <View style={styles.container}>
-      <MonoTitle>Subtraction Settings</MonoTitle>
       <OperatorSettings operator={Operator.Subtraction} />
     </View>
   );

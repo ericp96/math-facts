@@ -1,6 +1,9 @@
 import Realm, { Dictionary, ObjectSchema } from 'realm';
 
-interface Config extends Dictionary {}
+type Range = {min: number, max: number}
+
+interface Config extends Dictionary {
+}
 
 export class OperatorConfig extends Realm.Object<OperatorConfig> {
   _id!: Realm.BSON.ObjectId;
@@ -14,7 +17,7 @@ export class OperatorConfig extends Realm.Object<OperatorConfig> {
       _id: 'objectId',
       operator: 'string',
       enabled: 'bool',
-      config: 'mixed',
+      config: 'mixed{}',
     },
     primaryKey: '_id',
   };

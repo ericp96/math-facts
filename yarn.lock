@@ -1874,6 +1874,11 @@
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-compose-refs" "1.0.0"
 
+"@react-native-assets/slider@^7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@react-native-assets/slider/-/slider-7.1.1.tgz#1242bd6f870e5aff7afe7aa0ce2a4459c4688b2e"
+  integrity sha512-vMGuU4+s6dRnayEX1ixUhCcn7E1jfa07q4EqwY4Sc8xpr5Ipyv0UDVRD3LeXFFppOFjX0HGWsP0ZPXlB6rKEqw==
+
 "@react-native-community/cli-clean@11.3.7":
   version "11.3.7"
   resolved "https://registry.npmjs.org/@react-native-community/cli-clean/-/cli-clean-11.3.7.tgz"

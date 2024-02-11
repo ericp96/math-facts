@@ -6,6 +6,7 @@ export type Problem = {
   solution: number;
 };
 
-export type GetProblem = () => Problem;
+export type GetProblem = (config: any) => Problem;
+export type FetchProblem = () => Problem;
 
 export type OperatorSymbol = '+' | '-' | 'x' | '÷';
