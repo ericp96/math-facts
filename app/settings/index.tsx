@@ -3,11 +3,12 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from '../../components/library/Themed';
 import { useQuery } from '@realm/react';
 import { UserConfig } from '../../models/UserConfigModel';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { MonoText } from '../../components/library/StyledText';
 
 export default function SettingsMenuScreen() {
   const [userConfig] = useQuery(UserConfig);
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -66,6 +67,17 @@ export default function SettingsMenuScreen() {
       >
         <MonoText lightColor="#000" darkColor="#000">
           Division
+        </MonoText>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          router.push('/settings/custom');
+        }}
+        style={styles.button}
+      >
+        <MonoText lightColor="#000" darkColor="#000">
+          Custom
         </MonoText>
       </TouchableOpacity>
     </View>

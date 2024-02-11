@@ -1,5 +1,5 @@
-import { StyleSheet, Pressable, Text, TextInput, InputAccessoryView } from 'react-native';
-import { useCallback, useMemo, useState } from 'react';
+import { StyleSheet, TextInput, InputAccessoryView } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from '../components/library/Themed';
 import { Problem } from '../constants/Types';
 import { useFetchProblem } from '../hooks/useFetchProblem';
@@ -19,8 +19,8 @@ export default function Practice() {
   const inputAccessoryViewID = 'textboxButtonViewID';
 
   const fetchProblem = useFetchProblem();
-
-  const [{ numbers, operator, solution }, setProblem] = useState<Problem>(fetchProblem());
+  const firstProblem = useMemo(() => fetchProblem(), []);
+  const [{ numbers, operator, solution }, setProblem] = useState<Problem>(firstProblem);
   const [input, setInput] = useState('');
   const [answerState, setAnswerState] = useState<AnswerState>(AnswerState.Pending);
 
