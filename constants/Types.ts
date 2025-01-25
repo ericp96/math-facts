@@ -10,3 +10,5 @@ export type GetProblem = (config: any) => Problem;
 export type FetchProblem = () => Problem;
 
 export type OperatorSymbol = '+' | '-' | 'x' | '÷';
+
+export type Answer = {problem: Problem, answer: number};

@@ -10,12 +10,7 @@ import {
 } from "../utils/problemUtils";
 import { useQuery } from "@realm/react";
 import { OperatorConfig } from "../models/OperatorConfigModel";
-import {
-  AdditionDefaults,
-  DivisionDefaults,
-  MultiplicationDefaults,
-  SubtractionDefaults,
-} from "../constants/ConfigDefaults";
+import { OperatorDefaults } from "../constants/ConfigDefaults";
 
 const getAdditionProblem: GetProblem = (config) => {
   let firstNumber = 0;
@@ -136,13 +131,6 @@ const operatorFunctions = {
   [Operator.Division]: getDivisionProblem,
 };
 
-const operatorDefaults = {
-  [Operator.Addition]: AdditionDefaults,
-  [Operator.Subtraction]: SubtractionDefaults,
-  [Operator.Multiplication]: MultiplicationDefaults,
-  [Operator.Division]: DivisionDefaults,
-};
-
 export function useFetchProblem(): FetchProblem {
   const operatorConfigs = useQuery(OperatorConfig).filtered(
     "$0 == enabled",
@@ -155,21 +143,23 @@ export function useFetchProblem(): FetchProblem {
     }
     const operatorIndex = getRandomNumber(operatorConfigs.length - 1);
     const config = operatorConfigs[operatorIndex];
-    
+
     // @ts-ignore
     const operatorFunction = operatorFunctions[config.operator];
     // @ts-ignore
-    const defaults = operatorDefaults[config.operator] || {};
+    const defaults = OperatorDefaults[config.operator] || {};
     const operatorConfig = { ...defaults, ...config?.config };
-    
+
     if (operatorFunction == null) {
-      throw new Error("Backing math operator not implemented:" + config.operator);
+      throw new Error(
+        "Backing math operator not implemented:" + config.operator
+      );
     }
 
     const nextProblem = operatorFunction(operatorConfig);
 
-    console.log("NEXT PROBLEM:", JSON.stringify(nextProblem));
-    console.log("CONFIG:", JSON.stringify(operatorConfig));
+    // con  sole.log("NEXT PROBLEM:", JSON.stringify(nextProblem));
+    // console.log("CONFIG:", JSON.stringify(operatorConfig));
 
     return nextProblem;
   }, [operatorConfigs]);

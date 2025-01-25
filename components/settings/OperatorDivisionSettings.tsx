@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { OperatorSettingProps } from "./types";
 import Label from "./components/Label";
 import SubmitButton from "../library/SubmitButton";
-import { DivisionDefaults } from "../../constants/ConfigDefaults";
 
 const listNumbers = [...new Array(12)].map((_, i) => i + 1);
 
@@ -19,7 +18,6 @@ export default function OperatorDivisionSettings({
   const setConfigProperty = useCallback(
     (update: any) => {
       setConfig({
-        ...DivisionDefaults,
         ...config,
         ...update,
       });

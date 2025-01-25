@@ -7,7 +7,6 @@ import SubmitButton from "../library/SubmitButton";
 import SegmentedControl from "./components/SegmentedControl";
 import getValueWithDefault from "../../utils/getValueWithDefault";
 import RangeSelector from "./components/RangeSelector";
-import { MultiplicationDefaults } from "../../constants/ConfigDefaults";
 
 const listNumbers = [...new Array(12)].map((_, i) => i + 1);
 
@@ -22,7 +21,6 @@ export default function OperatorMultiplicationSettings({
   const setConfigProperty = useCallback(
     (update: any) => {
       setConfig({
-        ...MultiplicationDefaults,
         ...config,
         ...update,
       });
