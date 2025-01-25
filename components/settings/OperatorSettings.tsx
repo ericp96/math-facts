@@ -11,6 +11,7 @@ import OperatorDivisionSettings from "./OperatorDivisionSettings";
 import { OperatorConfig } from "../../models/OperatorConfigModel";
 import { Operator } from "../../constants/Enum";
 import { BSON } from "realm";
+import { OperatorDefaults } from "../../constants/ConfigDefaults";
 
 function getComponent(operator: Operator) {
   switch (operator) {
@@ -33,6 +34,7 @@ export default function OperatorSettings({ operator }: { operator: Operator }) {
   const { config, enabled } = operatorConfig || {};
 
   const Component = useMemo(() => getComponent(operator), [operator]);
+  const configWithDefaults = useMemo(() => ({...OperatorDefaults[operator], ...config}), [operator, config])
 
   const updateSettings = useCallback(
     (enabled: boolean, config: any) => {
@@ -63,7 +65,7 @@ export default function OperatorSettings({ operator }: { operator: Operator }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Component enabled={enabled} config={config} update={updateSettings} />
+        <Component enabled={enabled} config={configWithDefaults} update={updateSettings} />
       </ScrollView>
     </SafeAreaView>
   );

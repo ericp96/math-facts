@@ -4,3 +4,9 @@ export enum Operator {
   Division = 'DIVISION',
   Subtraction = 'SUBTRACTION',
 }
+
+export enum AnswerState {
+  Pending = 'pending',
+  Right = 'right',
+  Wrong = 'wrong',
+}

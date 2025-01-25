@@ -1,12 +1,12 @@
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, StyleSheet, TextInput } from "react-native";
 
-import { Text, View } from '../../components/library/Themed';
-import { useCallback, useState } from 'react';
-import { useQuery, useRealm } from '@realm/react';
-import { UserConfig } from '../../models/UserConfigModel';
-import { router } from 'expo-router';
-import SubmitButton from '../../components/library/SubmitButton';
-import { BSON } from 'realm';
+import { Text, View } from "../../components/library/Themed";
+import { useCallback, useState } from "react";
+import { useQuery, useRealm } from "@realm/react";
+import { UserConfig } from "../../models/UserConfigModel";
+import { router } from "expo-router";
+import SubmitButton from "../../components/library/SubmitButton";
+import { BSON } from "realm";
 
 export default function ProfileSettingsScreen() {
   const realm = useRealm();
@@ -20,7 +20,11 @@ export default function ProfileSettingsScreen() {
       });
     } else {
       realm.write(() => {
-        realm.create('UserConfig', { _id: new BSON.ObjectID(), name: input });
+        realm.create("UserConfig", {
+          _id: new BSON.ObjectID(),
+          name: input,
+          examTime: null,
+        });
       });
     }
     router.back();
@@ -29,7 +33,12 @@ export default function ProfileSettingsScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Name</Text>
-      <TextInput style={styles.textBox} editable onChangeText={(text) => setInput(text)} value={input} />
+      <TextInput
+        style={styles.textBox}
+        editable
+        onChangeText={(text) => setInput(text)}
+        value={input}
+      />
 
       <SubmitButton onPress={saveName}>Update Profile</SubmitButton>
     </View>
@@ -44,11 +53,11 @@ const styles = StyleSheet.create({
   label: {
     margin: 10,
     marginBottom: 0,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   textBox: {
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: "#eee",
     padding: 10,
     margin: 10,
   },

@@ -6,7 +6,6 @@ import SubmitButton from "../library/SubmitButton";
 import RangeSelector from "./components/RangeSelector";
 import Label from "./components/Label";
 import getValueWithDefault from "../../utils/getValueWithDefault";
-import { SubtractionDefaults } from "../../constants/ConfigDefaults";
 
 export default function OperatorSubtractionSettings({
   enabled: initialEnabled,
@@ -19,7 +18,6 @@ export default function OperatorSubtractionSettings({
   const setConfigProperty = useCallback(
     (update: any) => {
       setConfig({
-        ...SubtractionDefaults,
         ...config,
         ...update,
       });

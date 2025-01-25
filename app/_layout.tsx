@@ -2,8 +2,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack, router } from 'expo-router';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import React, { useEffect } from 'react';
+import { AppRegistry, useColorScheme } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
 import { RealmProvider } from '@realm/react';
 import { OperatorConfig } from '../models/OperatorConfigModel';
 import { UserConfig } from '../models/UserConfigModel';
@@ -50,22 +51,25 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <RealmProvider schema={[UserConfig, OperatorConfig]} schemaVersion={1} deleteRealmIfMigrationNeeded={true}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack initialRouteName="index">
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="practice" options={{ ...backSettings, title: 'Practice' }} />
-          {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
-          <Stack.Screen
-            name="settings"
-            options={{
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
-      </ThemeProvider>
-    </RealmProvider>
+    <PaperProvider>
+      <RealmProvider schema={[UserConfig, OperatorConfig]} schemaVersion={1} deleteRealmIfMigrationNeeded={true}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack initialRouteName="index">
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="practice" options={{ ...backSettings, title: 'Practice' }} />
+            <Stack.Screen name="exam" options={{ ...backSettings, title: 'Go!' }} />
+            <Stack.Screen
+              name="settings"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </ThemeProvider>
+      </RealmProvider>
+    </PaperProvider>
   );
 }
+
+AppRegistry.registerComponent('Math Facts', () => RootLayout);
+

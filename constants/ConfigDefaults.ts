@@ -1,3 +1,5 @@
+import { Operator } from "./Enum";
+
 export const DivisionDefaults = {
     enable1: true,
     enable2: true,
@@ -49,3 +51,10 @@ export const SubtractionDefaults = {
     secondNumberMax: 12,
     secondNumberMin: 1,
 }
+
+export const OperatorDefaults = {
+    [Operator.Addition]: AdditionDefaults,
+    [Operator.Subtraction]: SubtractionDefaults,
+    [Operator.Multiplication]: MultiplicationDefaults,
+    [Operator.Division]: DivisionDefaults,
+  };

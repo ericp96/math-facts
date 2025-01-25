@@ -70,7 +70,7 @@ export default function SettingsMenuScreen() {
         </MonoText>
       </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => {
           router.push('/settings/custom');
         }}
@@ -79,7 +79,7 @@ export default function SettingsMenuScreen() {
         <MonoText lightColor="#000" darkColor="#000">
           Custom
         </MonoText>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }

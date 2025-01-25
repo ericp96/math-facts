@@ -6,9 +6,9 @@ interface Props extends TextProps {
   children: any;
 }
 
-export default function InlineTitle({ children, ...props }: Props) {
+export default function InlineTitle({ children, style, ...props }: Props) {
   return (
-    <Text style={styles.title} {...props}>
+    <Text style={[styles.title, style]} {...props}>
       {children}
     </Text>
   );
