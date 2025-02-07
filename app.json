@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Math Facts",
+    "name": "Math Facts for K-4",
     "slug": "math-facts",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,12 +17,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.math-facts"
+      "bundleIdentifier": "com.anonymous.math-facts",
+      "runtimeVersion": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "runtimeVersion": {
+        "policy": "appVersion"
       }
     },
     "web": {
@@ -35,6 +39,17 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "23c5c2e2-6e00-4982-91da-a24bb3bbe888"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/23c5c2e2-6e00-4982-91da-a24bb3bbe888"
     }
   }
 }
