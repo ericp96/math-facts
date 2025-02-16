@@ -8,9 +8,9 @@
     "scheme": "mathfacts",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splashscreen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#855797"
     },
     "assetBundlePatterns": [
       "**/*"
