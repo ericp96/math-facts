@@ -1,10 +1,10 @@
 {
+  "icon": "./assets/images/icon.png",
   "expo": {
     "name": "Math Facts for K-4",
     "slug": "math-facts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
     "scheme": "mathfacts",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -18,7 +18,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.math-facts",
-      "runtimeVersion": "1.0.0"
+      "runtimeVersion": "1.0.0",
+      "icon": "./assets/images/icon.png"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,6 +36,18 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#232323",
+          "image": "./assets/images/splashscreen.png",
+          "dark": {
+            "image": "./assets/images/splashscreen.png",
+            "backgroundColor": "#000000"
+          },
+          "imageWidth": 200
+        }
+      ],
       "expo-router"
     ],
     "experiments": {
