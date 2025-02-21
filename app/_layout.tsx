@@ -1,13 +1,18 @@
+import 'react-native-get-random-values';
+
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { SplashScreen, Stack, router } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import React, { useEffect } from 'react';
 import { AppRegistry, useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
-import { RealmProvider } from '@realm/react';
+import { RealmProvider, useQuery, useRealm } from '@realm/react';
 import { OperatorConfig } from '../models/OperatorConfigModel';
 import { UserConfig } from '../models/UserConfigModel';
+import { OperatorDefaults } from "../constants/ConfigDefaults";
+import { Operator } from "../constants/Enum";
+import { BSON } from "realm";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -20,6 +25,37 @@ export const unstable_settings = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+function useAppSetup() {
+  const realm = useRealm();
+  const operatorConfigs = useQuery(OperatorConfig);
+
+  useEffect(() => {
+    if (operatorConfigs.length === 0) {
+      realm.write(() => {
+        Object.values(Operator).forEach((operator) => {
+          realm.create("OperatorConfig", {
+            _id: new BSON.ObjectID(),
+            enabled: true,
+            config: OperatorDefaults[operator],
+            operator,
+          });
+        });
+
+        realm.create("UserConfig", {
+          _id: new BSON.ObjectID(),
+          name: "Kid",
+          examTime: 60
+        });
+      });
+    }
+  }, [realm, operatorConfigs]);
+}
+
+function InitializeApp() {
+  useAppSetup();
+  return null;
+}
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -53,6 +89,7 @@ function RootLayoutNav() {
   return (
     <PaperProvider>
       <RealmProvider schema={[UserConfig, OperatorConfig]} schemaVersion={1} deleteRealmIfMigrationNeeded={true}>
+        <InitializeApp />
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack initialRouteName="index">
             <Stack.Screen name="index" options={{ headerShown: false }} />

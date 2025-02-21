@@ -23,7 +23,7 @@ export default function ProfileSettingsScreen() {
         realm.create("UserConfig", {
           _id: new BSON.ObjectID(),
           name: input,
-          examTime: null,
+          examTime: 60
         });
       });
     }

@@ -3,12 +3,11 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from '../../components/library/Themed';
 import { useQuery } from '@realm/react';
 import { UserConfig } from '../../models/UserConfigModel';
-import { router, useNavigation } from 'expo-router';
+import { router } from 'expo-router';
 import { MonoText } from '../../components/library/StyledText';
 
 export default function SettingsMenuScreen() {
   const [userConfig] = useQuery(UserConfig);
-  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
