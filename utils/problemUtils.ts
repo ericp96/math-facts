@@ -51,8 +51,7 @@ export function differenceRequiresBorrowing(
     return true;
   }
 
-  const biggerNumber = number1 > number2 ? number1 : number2;
-  let biggestPowerOfTen = Math.floor(Math.log10(biggerNumber));
+  let biggestPowerOfTen = Math.floor(Math.log10(number1));
   let requiresBorrowing = false;
 
   while (biggestPowerOfTen >= 0) {
@@ -64,8 +63,8 @@ export function differenceRequiresBorrowing(
       requiresBorrowing = true;
     }
 
-    number1 = number1 - num1 * factor;
-    number2 = number2 - num2 * factor;
+    number1 = number1 - (num1 * factor);
+    number2 = number2 - (num2 * factor);
     biggestPowerOfTen--;
   }
 
