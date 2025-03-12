@@ -1,5 +1,5 @@
-import { StyleSheet, TextInput, InputAccessoryView } from "react-native";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { StyleSheet, TextInput, InputAccessoryView, Keyboard } from "react-native";
+import { useCallback, useEffect, useState } from "react";
 import { View } from "../library/Themed";
 import { Problem } from "../../constants/Types";
 import { getOperatorSymbol } from "../../utils/problemUtils";
@@ -20,11 +20,15 @@ export default function ProblemQuestion({
   const { numbers, operator } = problem;
 
   useEffect(() => {
+    // Reset the input when the problem changes
     setInput("");
   }, [problem]);
 
   const onCheck = useCallback(
-    () => onSubmit(parseInt(input, 10)),
+    () => {
+      Keyboard.dismiss();
+      onSubmit(parseInt(input, 10))
+    },
     [onSubmit, input]
   );
 

@@ -1,4 +1,5 @@
 {
+  "icon": "./assets/images/icon.png",
   "expo": {
     "name": "Math Facts for K-4",
     "slug": "math-facts",
@@ -41,7 +42,7 @@
           "image": "./assets/images/splashscreen.png",
           "dark": {
             "image": "./assets/images/splashscreen.png",
-            "backgroundColor": "#000000"
+            "backgroundColor": "#232323"
           },
           "imageWidth": 200
         }
