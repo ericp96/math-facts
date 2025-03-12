@@ -1,4 +1,4 @@
-{
+module.exports = {
   "icon": "./assets/images/icon.png",
   "expo": {
     "name": "Math Facts for K-4",
@@ -57,11 +57,11 @@
         "origin": false
       },
       "eas": {
-        "projectId": "23c5c2e2-6e00-4982-91da-a24bb3bbe888"
+        "projectId": process.env.EAS_PROJECT_ID
       }
     },
     "updates": {
-      "url": "https://u.expo.dev/23c5c2e2-6e00-4982-91da-a24bb3bbe888"
+      "url": process.env.EXPO_UPDATES_URL
     }
   }
 }

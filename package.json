@@ -30,7 +30,7 @@
     "expo-system-ui": "~2.4.0",
     "expo-updates": "~0.18.19",
     "expo-web-browser": "~12.3.2",
-    "lottie-ios": "^3.4.0",
+    "lottie-ios": "3.4.0",
     "lottie-react-native": "5.1.6",
     "metro": "~0.76.7",
     "react": "18.2.0",
