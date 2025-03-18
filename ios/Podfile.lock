@@ -8,14 +8,14 @@ PODS:
     - ExpoModulesCore
   - EXConstants (14.4.2):
     - ExpoModulesCore
-  - EXFileSystem (15.4.4):
+  - EXFileSystem (15.4.5):
     - ExpoModulesCore
   - EXFont (11.4.0):
     - ExpoModulesCore
   - EXJSONUtils (0.7.1)
   - EXManifests (0.7.2):
     - ExpoModulesCore
-  - Expo (49.0.11):
+  - Expo (49.0.23):
     - ExpoModulesCore
   - expo-dev-client (2.4.13):
     - EXManifests
@@ -72,11 +72,11 @@ PODS:
     - expo-dev-menu/SafeAreaView
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - ExpoHead (0.0.14):
+  - ExpoHead (0.0.20):
     - ExpoModulesCore
   - ExpoKeepAwake (12.3.0):
     - ExpoModulesCore
-  - ExpoModulesCore (1.5.11):
+  - ExpoModulesCore (1.5.13):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-NativeModulesApple
@@ -539,14 +539,14 @@ PODS:
     - React-jsi (= 0.72.10)
     - React-logger (= 0.72.10)
     - React-perflogger (= 0.72.10)
-  - RealmJS (12.2.1):
+  - RealmJS (12.14.1):
     - React
   - RNGestureHandler (2.12.1):
     - React-Core
   - RNScreens (3.22.1):
     - React-Core
     - React-RCTImage
-  - RNVectorIcons (10.0.3):
+  - RNVectorIcons (10.2.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - SocketRocket (0.6.1)
@@ -772,23 +772,23 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   ASN1Decoder: 91cb1d781b5a178ea7375b2f1519e2bdaaa4c427
-  boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  boost: 7dcd2de282d72e344012f7d6564d024930a6a440
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EASClient: 49f8ea858204eb4844d9fb386e5fb7920aee2e30
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
-  EXFileSystem: 2b826a3bf1071a4b80a8457e97124783d1ac860e
+  EXFileSystem: f8b838a880254de42a5a7da20ed5ce12e2697c1b
   EXFont: 738c44c390953ebcbab075a4848bfbef025fd9ee
   EXJSONUtils: 6802be4282d42b97c51682468ddc1026a06f8276
   EXManifests: cf66451b11b2c2f6464917528d792759f7fd6ce0
-  Expo: 8a2d2c235bcbe4f41774562a0635bd74c174858c
+  Expo: ba9abdf444dc6d2c05a82c4c1b51a2400beb6167
   expo-dev-client: f350e6ddced33d2c14008c6d70c7904c0cd78b1f
   expo-dev-launcher: 3c29a60a0e17e62d02cddcb6c106a25f63f1c75c
   expo-dev-menu: c5f789b6228f4176f83a1f47dba54350e63437e1
   expo-dev-menu-interface: bda969497e73dadc2663c479e0fa726ca79a306e
-  ExpoHead: 82eda8e633ca25980d8ec46ba793a3df4e2b16fc
+  ExpoHead: ac95331e2a45cb94f6aee8ba6b8cb3d0a2cc6817
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
-  ExpoModulesCore: 51cb2e7ab4c8da14be3f40b66d54c1781002e99d
+  ExpoModulesCore: cf14fc49a3d5df3ed3cf2a38fc758d073bfd1c13
   ExpoSystemUI: fa4854e3226e87f86d3383570264c6e4e90bc782
   ExpoWebBrowser: 2c788f9c07718a780fe6d8bf2f6195c47609faaa
   EXSplashScreen: c0e7f2d4a640f3b875808ed0b88575538daf6d82
@@ -838,13 +838,13 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 6ca43e8deadf01ff06b3f01abf8f0e4d508e23c3
   React-utils: 372b83030a74347331636909278bf0a60ec30d59
   ReactCommon: 38824bfffaf4c51fbe03a2730b4fd874ef34d67b
-  RealmJS: b36dae5c0def204602827884512252a320332c69
+  RealmJS: f3f9d0a5361cc18ef5a6fe0fa1c274a821cef708
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   RNScreens: 50ffe2fa2342eabb2d0afbe19f7c1af286bc7fb3
-  RNVectorIcons: 64e6a523ac30a3241efa9baf1ffbcc5e76ff747a
+  RNVectorIcons: 084d874504f21a5452744e400537eb96b45060b6
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: d0003f849d2b5224c072cef6568b540d8bb15cd3
 
-PODFILE CHECKSUM: 1ff24f894d781342709e9d7a7ea93b27d82aa564
+PODFILE CHECKSUM: fa4199db6845a7660d04d289ec697468ce88f57a
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2

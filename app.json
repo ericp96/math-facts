@@ -32,7 +32,8 @@
       },
       "runtimeVersion": {
         "policy": "appVersion"
-      }
+      },
+      "package": "com.ericp96.mathfacts"
     },
     "web": {
       "bundler": "metro",
