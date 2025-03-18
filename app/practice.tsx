@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Keyboard, SafeAreaView, StyleSheet } from "react-native";
 import { useCallback, useMemo, useState } from "react";
 import { View } from "../components/library/Themed";
 import { Problem } from "../constants/Types";
@@ -18,6 +18,7 @@ export default function Practice() {
 
   const onCheck = useCallback(
     (answer: number) => {
+      Keyboard.dismiss();
       if (problem.solution === answer) {
         setAnswerState(AnswerState.Right);
         return;

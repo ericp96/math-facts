@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, InputAccessoryView, Keyboard } from "react-native";
+import { StyleSheet, TextInput, InputAccessoryView } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { View } from "../library/Themed";
 import { Problem } from "../../constants/Types";
@@ -26,7 +26,6 @@ export default function ProblemQuestion({
 
   const onCheck = useCallback(
     () => {
-      Keyboard.dismiss();
       onSubmit(parseInt(input, 10))
     },
     [onSubmit, input]

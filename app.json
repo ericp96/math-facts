@@ -1,7 +1,7 @@
 {
   "icon": "./assets/images/icon.png",
   "expo": {
-    "name": "Math Facts for K-4",
+    "name": "Math Facts",
     "slug": "math-facts",
     "version": "1.0.0",
     "orientation": "portrait",
