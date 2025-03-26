@@ -10,6 +10,7 @@ export class OperatorConfig extends Realm.Object<OperatorConfig> {
   operator!: string;
   enabled!: boolean;
   config!: Config;
+  userId!: Realm.BSON.ObjectId;
 
   static schema: ObjectSchema = {
     name: 'OperatorConfig',
@@ -18,6 +19,7 @@ export class OperatorConfig extends Realm.Object<OperatorConfig> {
       operator: 'string',
       enabled: 'bool',
       config: 'mixed{}',
+      userId: 'objectId',
     },
     primaryKey: '_id',
   };

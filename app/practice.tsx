@@ -34,7 +34,7 @@ export default function Practice() {
         setProblem(fetchProblem());
       }
       setAnswerState(AnswerState.Pending);
-    }, 1000);
+    }, 500);
   }, [answerState, fetchProblem, setProblem, setAnswerState]);
 
   const rightAnswerComponent = useMemo(() => {

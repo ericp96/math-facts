@@ -29,9 +29,27 @@ SplashScreen.preventAutoHideAsync();
 function useAppSetup() {
   const realm = useRealm();
   const operatorConfigs = useQuery(OperatorConfig);
+  const users = useQuery(UserConfig);
 
   useEffect(() => {
+    if (users.length === 1 
+      && operatorConfigs.length > 0 
+      && operatorConfigs.some(config => config.userId === users[0]._id)
+    ) {
+      realm.write(() => {
+        operatorConfigs.forEach(config => {
+          config.userId = users[0]._id;
+        })
+
+        realm.create('PreferenceConfig', {
+          _id: new BSON.ObjectID(),
+          currentUser: users[0]._id,
+        })
+      });
+    }
+
     if (operatorConfigs.length === 0) {
+      const userId = new BSON.ObjectID();
       realm.write(() => {
         Object.values(Operator).forEach((operator) => {
           realm.create("OperatorConfig", {
@@ -39,17 +57,24 @@ function useAppSetup() {
             enabled: true,
             config: OperatorDefaults[operator],
             operator,
+            userId,
           });
         });
 
         realm.create("UserConfig", {
-          _id: new BSON.ObjectID(),
+          _id: userId,
           name: "Kid",
-          examTime: 60
+          examTime: 60,
+          showTimer: true,
+        });
+
+        realm.create('PreferenceConfig', {
+          _id: new BSON.ObjectID(),
+          currentUser: users[0]._id,
         });
       });
     }
-  }, [realm, operatorConfigs]);
+  }, [realm, operatorConfigs, users]);
 }
 
 function InitializeApp() {

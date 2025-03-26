@@ -1,4 +1,4 @@
-import { Button, StyleSheet, TextInput } from "react-native";
+import { Button, StyleSheet, Switch, TextInput } from "react-native";
 
 import { Text, View } from "../../components/library/Themed";
 import { useCallback, useState } from "react";
@@ -7,23 +7,27 @@ import { UserConfig } from "../../models/UserConfigModel";
 import { router } from "expo-router";
 import SubmitButton from "../../components/library/SubmitButton";
 import { BSON } from "realm";
+import Label from "../../components/settings/components/Label";
 
 export default function ProfileSettingsScreen() {
   const realm = useRealm();
   const [userConfig] = useQuery(UserConfig);
   const [input, setInput] = useState(userConfig?.name);
+  const [showTimer, setShowTimer] = useState(userConfig?.showTimer);
 
   const saveName = useCallback(() => {
     if (userConfig != null) {
       realm.write(() => {
         userConfig.name = input;
+        userConfig.showTimer = showTimer;
       });
     } else {
       realm.write(() => {
         realm.create("UserConfig", {
           _id: new BSON.ObjectID(),
           name: input,
-          examTime: 60
+          examTime: 60,
+          showTimer
         });
       });
     }
@@ -40,6 +44,11 @@ export default function ProfileSettingsScreen() {
         value={input}
       />
 
+      <View style={styles.toggleWrapper}>
+        <Label>Show Timer</Label>
+        <Switch onValueChange={() => setShowTimer(!showTimer)} value={showTimer} />
+      </View>
+
       <SubmitButton onPress={saveName}>Update Profile</SubmitButton>
     </View>
   );
@@ -49,6 +58,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  toggleWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "space-between",
+    padding: 10,
+    alignItems: "center",
   },
   label: {
     margin: 10,

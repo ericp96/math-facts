@@ -4,6 +4,8 @@ import { View } from "../library/Themed";
 import { Answer, Problem } from "../../constants/Types";
 import { useFetchProblem } from "../../hooks/useFetchProblem";
 import ProblemQuestion from "./ProblemQuestion";
+import { useQuery, useRealm } from "@realm/react";
+import { UserConfig } from "../../models/UserConfigModel";
 
 type Milliseconds = number;
 type Seconds = number;
@@ -29,7 +31,7 @@ function useTimer(time: Seconds, onComplete: () => void) {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (Number.isNaN(timeRemaining) || timeRemaining == null)  {
+      if (Number.isNaN(timeRemaining) || timeRemaining === null || timeRemaining === undefined)  {
         return;
       }
       if (Math.max(0, timeRemaining) === 0) {
@@ -49,6 +51,7 @@ export default function ExamRunner({ onEnd, time }: {onEnd: (answers: Array<Answ
   const firstProblem = useMemo(() => fetchProblem(), []);
   const [problem, setProblem] = useState<Problem>(firstProblem);
   const [answers, setAnswers] = useState<Array<Answer>>([]);
+  const [userConfig] = useQuery(UserConfig);
 
   const handleEnd = useCallback(() => {
     onEnd(answers);
@@ -70,7 +73,9 @@ export default function ExamRunner({ onEnd, time }: {onEnd: (answers: Array<Answ
 
   return (
     <View style={styles.container}>
-      <View><Text>{timeRemaining}</Text></View>
+      {userConfig?.showTimer && (
+        <View><Text>{timeRemaining}</Text></View>
+      )}
       <ProblemQuestion
         problem={problem}
         onSubmit={onNext}
@@ -88,6 +93,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: "100%",
     flex: 0,
-    paddingLeft: 0,
   },
 });

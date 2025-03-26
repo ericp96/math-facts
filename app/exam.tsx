@@ -34,6 +34,7 @@ export default function Exam() {
             _id: new BSON.ObjectID(),
             name: "",
             examTime,
+            showTimer: true,
           });
         });
       }
@@ -88,7 +89,6 @@ const styles = StyleSheet.create({
     height: "100%",
     margin: 0,
     padding: 0,
-    paddingRight: 10,
     width: "100%",
     display: "flex",
     flex: 0,
