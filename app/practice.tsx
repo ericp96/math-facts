@@ -29,10 +29,12 @@ export default function Practice() {
   );
 
   const resetAnswerState = useCallback(() => {
-    if (answerState === AnswerState.Right) {
-      setProblem(fetchProblem());
-    }
-    setAnswerState(AnswerState.Pending);
+    setTimeout(() => {
+      if (answerState === AnswerState.Right) {
+        setProblem(fetchProblem());
+      }
+      setAnswerState(AnswerState.Pending);
+    }, 1000);
   }, [answerState, fetchProblem, setProblem, setAnswerState]);
 
   const rightAnswerComponent = useMemo(() => {

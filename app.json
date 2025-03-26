@@ -1,7 +1,7 @@
 {
   "icon": "./assets/images/icon.png",
   "expo": {
-    "name": "Math Facts",
+    "name": "ekho math",
     "slug": "math-facts",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,7 +12,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.math-facts",
+      "bundleIdentifier": "com.pastuer.math-facts",
       "runtimeVersion": "1.0.0",
       "icon": "./assets/images/icon.png"
     },

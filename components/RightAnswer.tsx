@@ -22,6 +22,76 @@ const animations = [
       onAnimationFinish={onAnimationFinish}
     />
   ),
+   ({ onAnimationFinish }: ComponentProps) => (
+    <LottieView
+      source={require('../assets/images/right-answers/right-purple-checkmark.json')}
+      autoPlay
+      loop={false}
+      speed={2}
+      resizeMode="contain"
+      onAnimationFinish={onAnimationFinish}
+    />
+  ),
+  ({ onAnimationFinish }: ComponentProps) => (
+    <LottieView
+      source={require('../assets/images/right-answers/right-turtle.json')}
+      autoPlay
+      loop={false}
+      speed={2}
+      resizeMode="contain"
+      onAnimationFinish={onAnimationFinish}
+    />
+  ),
+  ({ onAnimationFinish }: ComponentProps) => (
+    <LottieView
+      source={require('../assets/images/right-answers/right-dinosaur.json')}
+      autoPlay
+      loop={false}
+      speed={2}
+      resizeMode="contain"
+      onAnimationFinish={onAnimationFinish}
+    />
+  ),
+  ({ onAnimationFinish }: ComponentProps) => (
+    <LottieView
+      source={require('../assets/images/right-answers/right-balloons.json')}
+      autoPlay
+      loop={false}
+      speed={2}
+      resizeMode="contain"
+      onAnimationFinish={onAnimationFinish}
+    />
+  ),
+  ({ onAnimationFinish }: ComponentProps) => (
+    <LottieView
+      source={require('../assets/images/right-answers/right-dinosaur-scooter.json')}
+      autoPlay
+      loop={false}
+      speed={2}
+      resizeMode="contain"
+      onAnimationFinish={onAnimationFinish}
+    />
+  ),
+  ({ onAnimationFinish }: ComponentProps) => (
+    <LottieView
+      source={require('../assets/images/right-answers/right-butterfly.json')}
+      autoPlay
+      loop={false}
+      speed={2}
+      resizeMode="contain"
+      onAnimationFinish={onAnimationFinish}
+    />
+  ),
+  ({ onAnimationFinish }: ComponentProps) => (
+    <LottieView
+      source={require('../assets/images/right-answers/right-lion.json')}
+      autoPlay
+      loop={false}
+      speed={2}
+      resizeMode="contain"
+      onAnimationFinish={onAnimationFinish}
+    />
+  ),
   ({ onAnimationFinish }: ComponentProps) => (
     <LottieView
       source={require('../assets/images/right-answers/right-explosion.json')}

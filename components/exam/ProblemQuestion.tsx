@@ -19,14 +19,15 @@ export default function ProblemQuestion({
   const [input, setInput] = useState("");
   const { numbers, operator } = problem;
 
-  useEffect(() => {
-    // Reset the input when the problem changes
-    setInput("");
-  }, [problem]);
+  // useEffect(() => {
+  //   // Reset the input when the problem changes
+  //   setInput("");
+  // }, [problem]);
 
   const onCheck = useCallback(
     () => {
-      onSubmit(parseInt(input, 10))
+      onSubmit(parseInt(input, 10));
+      setInput("");
     },
     [onSubmit, input]
   );
