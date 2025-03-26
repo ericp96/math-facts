@@ -1,13 +1,30 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
+import { useState } from "react";
 
 import { View } from "../../components/library/Themed";
-import { useQuery } from "@realm/react";
+import { useQuery, useRealm } from "@realm/react";
 import { UserConfig } from "../../models/UserConfigModel";
 import { router } from "expo-router";
 import { MonoText } from "../../components/library/StyledText";
 
 export default function SettingsMenuScreen() {
   const [userConfig] = useQuery(UserConfig);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [newUserName, setNewUserName] = useState("");
+  const realm = useRealm();
+
+  const handleCreateUser = () => {
+    realm.write(() => {
+      realm.create('UserConfig', {
+        _id: new Realm.BSON.ObjectId(),
+        name: newUserName,
+        examTime: 60,
+        showTimer: true,
+      });
+    });
+    setIsModalVisible(false);
+    setNewUserName("");
+  };
 
   return (
     <View style={styles.container}>
@@ -15,10 +32,52 @@ export default function SettingsMenuScreen() {
         <MonoText lightColor="#000" darkColor="#000">
           {userConfig?.name}
         </MonoText>
-        <MonoText lightColor="#000" darkColor="#000">
-          Add Profile
-        </MonoText>
+        <TouchableOpacity onPress={() => setIsModalVisible(true)}>
+          <MonoText lightColor="#000" darkColor="#000">
+            Add Profile
+          </MonoText>
+        </TouchableOpacity>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => setIsModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <MonoText style={styles.modalTitle}>Create New User</MonoText>
+            
+            <View style={styles.inputContainer}>
+              <MonoText>Name</MonoText>
+              <TextInput
+                style={styles.input}
+                value={newUserName}
+                onChangeText={setNewUserName}
+                placeholder="Enter name"
+              />
+            </View>
+
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton]}
+                onPress={() => setIsModalVisible(false)}
+              >
+                <MonoText>Cancel</MonoText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.createButton]}
+                onPress={handleCreateUser}
+                disabled={!newUserName}
+              >
+                <MonoText lightColor="#fff" darkColor="#fff">Create</MonoText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       <TouchableOpacity
         onPress={() => {
           router.push("/settings/profile");
@@ -137,5 +196,50 @@ const styles = StyleSheet.create({
     alignContent: "center",
     textAlign: "center",
     alignItems: "center",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    padding: 10,
+    width: '92%',
+    maxWidth: 400,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  inputTitle: {
+    fontWeight: 'bold',
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5,
+    padding: 8,
+    marginTop: 5,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  cancelButton: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  createButton: {
+    flex: 1,
+    backgroundColor: '#855797',
   },
 });
