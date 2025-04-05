@@ -6,9 +6,10 @@ import { useQuery, useRealm } from "@realm/react";
 import { UserConfig } from "../../models/UserConfigModel";
 import { router } from "expo-router";
 import { MonoText } from "../../components/library/StyledText";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 export default function SettingsMenuScreen() {
-  const [userConfig] = useQuery(UserConfig);
+  const userConfig = useCurrentUser();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newUserName, setNewUserName] = useState("");
   const realm = useRealm();

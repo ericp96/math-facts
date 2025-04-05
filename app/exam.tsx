@@ -8,6 +8,7 @@ import { UserConfig } from "../models/UserConfigModel";
 import { BSON } from "realm";
 import { Answer } from "../constants/Types";
 import ExamResults from "../components/exam/ExamResults";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 enum ExamState {
   Setup = "setup",
@@ -20,7 +21,7 @@ export default function Exam() {
   const [answers, setAnswers] = useState<Array<Answer>>([]);
 
   const realm = useRealm();
-  const [userConfig] = useQuery(UserConfig);
+  const userConfig = useCurrentUser();
 
   const setExamTime = useCallback(
     (examTime: number) => {

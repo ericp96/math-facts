@@ -8,10 +8,11 @@ import { router } from "expo-router";
 import SubmitButton from "../../components/library/SubmitButton";
 import { BSON } from "realm";
 import Label from "../../components/settings/components/Label";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 export default function ProfileSettingsScreen() {
   const realm = useRealm();
-  const [userConfig] = useQuery(UserConfig);
+  const userConfig = useCurrentUser();
   const [input, setInput] = useState(userConfig?.name);
   const [showTimer, setShowTimer] = useState(userConfig?.showTimer);
 

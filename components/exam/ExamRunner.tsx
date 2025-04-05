@@ -6,6 +6,7 @@ import { useFetchProblem } from "../../hooks/useFetchProblem";
 import ProblemQuestion from "./ProblemQuestion";
 import { useQuery, useRealm } from "@realm/react";
 import { UserConfig } from "../../models/UserConfigModel";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 type Milliseconds = number;
 type Seconds = number;
@@ -51,7 +52,7 @@ export default function ExamRunner({ onEnd, time }: {onEnd: (answers: Array<Answ
   const firstProblem = useMemo(() => fetchProblem(), []);
   const [problem, setProblem] = useState<Problem>(firstProblem);
   const [answers, setAnswers] = useState<Array<Answer>>([]);
-  const [userConfig] = useQuery(UserConfig);
+  const userConfig = useCurrentUser();
 
   const handleEnd = useCallback(() => {
     onEnd(answers);

@@ -6,12 +6,11 @@ import InlineTitle from "../components/library/InlineTitle";
 import React from "react";
 import { MonoText } from "../components/library/StyledText";
 import { router } from "expo-router";
-import { useQuery } from "@realm/react";
-import { UserConfig } from "../models/UserConfigModel";
 import Button from "../components/library/Button";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export default function Home() {
-  const [userConfig] = useQuery(UserConfig) || [];
+  const userConfig = useCurrentUser();
 
   return (
     // @ts-expect-error
