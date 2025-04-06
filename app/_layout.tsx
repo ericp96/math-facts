@@ -13,6 +13,7 @@ import { UserConfig } from '../models/UserConfigModel';
 import { OperatorDefaults } from "../constants/ConfigDefaults";
 import { Operator } from "../constants/Enum";
 import { BSON } from "realm";
+import { PreferenceConfig } from '../models/PreferenceConfigModel';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -106,14 +107,14 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
-const backSettings = { headerBackVisible: true, fullScreenGestureEnabled: true };
+const backSettings = { headerBackButtonDisplayMode: 'minimal', fullScreenGestureEnabled: true };
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
     <PaperProvider>
-      <RealmProvider schema={[UserConfig, OperatorConfig]} schemaVersion={1} deleteRealmIfMigrationNeeded={true}>
+      <RealmProvider schema={[UserConfig, OperatorConfig, PreferenceConfig]} schemaVersion={1} deleteRealmIfMigrationNeeded={true}>
         <InitializeApp />
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <Stack initialRouteName="index">

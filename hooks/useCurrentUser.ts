@@ -10,7 +10,7 @@ export function useCurrentUserId() {
 }
 
 export function useCurrentUser() {
-    const currentUserId = useCurrentUser();
+    const currentUserId = useCurrentUserId();
     const configs = useQuery(UserConfig);
     const [userConfig] = configs.filtered("_id == $0", currentUserId);
 
