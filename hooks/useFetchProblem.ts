@@ -5,12 +5,12 @@ import {
   differenceRequiresBorrowing,
   getRandomNumber,
   getSolution,
-  performOperation,
   sumRequiresRegrouping,
 } from "../utils/problemUtils";
 import { useQuery } from "@realm/react";
 import { OperatorConfig } from "../models/OperatorConfigModel";
 import { OperatorDefaults } from "../constants/ConfigDefaults";
+import { useCurrentUser } from "./useCurrentUser";
 
 const getAdditionProblem: GetProblem = (config) => {
   let firstNumber = 0;
@@ -132,9 +132,11 @@ const operatorFunctions = {
 };
 
 export function useFetchProblem(): FetchProblem {
+  const userConfig = useCurrentUser();
   const operatorConfigs = useQuery(OperatorConfig).filtered(
-    "$0 == enabled",
-    true
+    "$0 == enabled AND $1 == userId",
+    true,
+    userConfig?._id
   );
 
   return useCallback(() => {

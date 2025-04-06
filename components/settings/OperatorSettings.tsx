@@ -12,6 +12,7 @@ import { OperatorConfig } from "../../models/OperatorConfigModel";
 import { Operator } from "../../constants/Enum";
 import { BSON } from "realm";
 import { OperatorDefaults } from "../../constants/ConfigDefaults";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 function getComponent(operator: Operator) {
   switch (operator) {
@@ -28,13 +29,21 @@ function getComponent(operator: Operator) {
 
 export default function OperatorSettings({ operator }: { operator: Operator }) {
   const realm = useRealm();
+  const userConfig = useCurrentUser();
   const operatorConfigs = useQuery(OperatorConfig);
   const [operatorConfig] =
-    operatorConfigs.filtered("$0 == operator", operator) || [];
+    operatorConfigs.filtered(
+      "$0 == operator AND $1 == userId",
+      operator,
+      userConfig?._id
+    ) || [];
   const { config, enabled } = operatorConfig || {};
 
   const Component = useMemo(() => getComponent(operator), [operator]);
-  const configWithDefaults = useMemo(() => ({...OperatorDefaults[operator], ...config}), [operator, config])
+  const configWithDefaults = useMemo(
+    () => ({ ...OperatorDefaults[operator], ...config }),
+    [operator, config]
+  );
 
   const updateSettings = useCallback(
     (enabled: boolean, config: any) => {
@@ -65,7 +74,11 @@ export default function OperatorSettings({ operator }: { operator: Operator }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Component enabled={enabled} config={configWithDefaults} update={updateSettings} />
+        <Component
+          enabled={enabled}
+          config={configWithDefaults}
+          update={updateSettings}
+        />
       </ScrollView>
     </SafeAreaView>
   );

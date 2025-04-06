@@ -34,7 +34,7 @@ function useAppSetup() {
   useEffect(() => {
     if (users.length === 1 
       && operatorConfigs.length > 0 
-      && operatorConfigs.some(config => config.userId === users[0]._id)
+      && operatorConfigs.some(config => config.userId != users[0]._id)
     ) {
       realm.write(() => {
         operatorConfigs.forEach(config => {

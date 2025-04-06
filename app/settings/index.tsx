@@ -2,11 +2,11 @@ import { StyleSheet, TouchableOpacity, Modal, TextInput, Switch } from "react-na
 import { useState } from "react";
 
 import { View } from "../../components/library/Themed";
-import { useQuery, useRealm } from "@realm/react";
-import { UserConfig } from "../../models/UserConfigModel";
+import { useRealm } from "@realm/react";
 import { router } from "expo-router";
 import { MonoText } from "../../components/library/StyledText";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { BSON } from 'realm';
 
 export default function SettingsMenuScreen() {
   const userConfig = useCurrentUser();
@@ -17,7 +17,7 @@ export default function SettingsMenuScreen() {
   const handleCreateUser = () => {
     realm.write(() => {
       realm.create('UserConfig', {
-        _id: new Realm.BSON.ObjectId(),
+        _id: new BSON.ObjectId(),
         name: newUserName,
         examTime: 60,
         showTimer: true,
