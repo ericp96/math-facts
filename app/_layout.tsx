@@ -80,6 +80,7 @@ function useAppSetup() {
 
 function InitializeApp() {
   useAppSetup();
+  
   return null;
 }
 

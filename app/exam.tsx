@@ -57,28 +57,31 @@ export default function Exam() {
       )}
 
       {view !== ExamState.Running && (
-        <LottieView
-          style={styles.background}
-          source={require("../assets/images/exam-background.json")}
-          autoPlay
-          loop
-          resizeMode="cover"
-        >
-          {view === ExamState.Setup && (
-            <ExamStart
-              onStart={() => setView(ExamState.Running)}
-              setExamTime={setExamTime}
-              examTime={userConfig?.examTime || 30}
-            />
-          )}
+        <View style={styles.background}>
+          <LottieView
+            style={styles.backgroundAnimation}
+            source={require("../assets/images/exam-background.json")}
+            autoPlay
+            loop
+            resizeMode="cover"
+          />
+          <View style={styles.content}>
+            {view === ExamState.Setup && (
+              <ExamStart
+                onStart={() => setView(ExamState.Running)}
+                setExamTime={setExamTime}
+                examTime={userConfig?.examTime || 30}
+              />
+            )}
 
-          {view === ExamState.Results && (
-            <ExamResults
-              results={answers}
-              startNewExam={() => setView(ExamState.Running)}
-            />
-          )}
-        </LottieView>
+            {view === ExamState.Results && (
+              <ExamResults
+                results={answers}
+                startNewExam={() => setView(ExamState.Running)}
+              />
+            )}
+          </View>
+        </View>
       )}
     </SafeAreaView>
   );
@@ -86,19 +89,20 @@ export default function Exam() {
 
 const styles = StyleSheet.create({
   background: {
-    height: "100%",
-    margin: 0,
-    padding: 0,
-    width: "100%",
-    display: "flex",
-    flex: 0,
+    flex: 1,
+  },
+  backgroundAnimation: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  content: {
+    flex: 1,
+    zIndex: 1,
   },
   container: {
-    height: "100%",
-    margin: 0,
-    padding: 0,
-    width: "100%",
-    display: "flex",
-    flex: 0,
+    flex: 1,
   },
 });

@@ -20,6 +20,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
    ({ onAnimationFinish }: ComponentProps) => (
@@ -30,6 +31,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -40,6 +42,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -50,6 +53,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -60,6 +64,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -70,6 +75,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -80,6 +86,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -90,6 +97,7 @@ const animations = [
       speed={2}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -99,6 +107,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -108,6 +117,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -117,6 +127,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -126,6 +137,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -135,6 +147,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -144,6 +157,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -153,6 +167,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
   ({ onAnimationFinish }: ComponentProps) => (
@@ -162,6 +177,7 @@ const animations = [
       loop={false}
       resizeMode="contain"
       onAnimationFinish={onAnimationFinish}
+      style={styles.lottieAnimation}
     />
   ),
 ];
@@ -205,5 +221,11 @@ const styles = StyleSheet.create({
     fontSize: 38,
     color: '#21005D',
     fontWeight: 'bold',
+  },
+  lottieAnimation: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    minHeight: 200,
   },
 });

@@ -32,10 +32,7 @@ function useTimer(time: Seconds, onComplete: () => void) {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (Number.isNaN(timeRemaining) || timeRemaining === null || timeRemaining === undefined)  {
-        return;
-      }
-      if (Math.max(0, timeRemaining) === 0) {
+      if (Number.isNaN(timeRemaining) || timeRemaining == null || Math.max(0, timeRemaining) <= 0) {
         onComplete();
       } else {
         setTimeRemaining(() => computeTimeRemaining(startTime, time))
