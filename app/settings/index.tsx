@@ -1,11 +1,11 @@
 import { StyleSheet, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { View } from "../../components/library/Themed";
 import { useRealm } from "@realm/react";
 import { router } from "expo-router";
 import { MonoText } from "../../components/library/StyledText";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useCurrentUser, useUpdateCurrentUser } from "../../hooks/useCurrentUser";
 import { BSON } from 'realm';
 
 export default function SettingsMenuScreen() {
@@ -13,11 +13,14 @@ export default function SettingsMenuScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newUserName, setNewUserName] = useState("");
   const realm = useRealm();
+  const updateCurrentUser = useUpdateCurrentUser();
 
-  const handleCreateUser = () => {
+  const handleCreateUser = useCallback(() => {
+    const newUserId = new BSON.ObjectId();
+    
     realm.write(() => {
       realm.create('UserConfig', {
-        _id: new BSON.ObjectId(),
+        _id: newUserId,
         name: newUserName,
         examTime: 60,
         showTimer: true,
@@ -25,7 +28,10 @@ export default function SettingsMenuScreen() {
     });
     setIsModalVisible(false);
     setNewUserName("");
-  };
+
+    updateCurrentUser(newUserId);
+    router.push("/");
+  }, [newUserName, realm]);
 
   return (
     <View style={styles.container}>
