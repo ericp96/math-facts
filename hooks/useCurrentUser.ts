@@ -1,6 +1,7 @@
-import { useQuery } from "@realm/react";
+import { useQuery, useRealm } from "@realm/react";
 import { PreferenceConfig } from "../models/PreferenceConfigModel";
 import { UserConfig } from "../models/UserConfigModel";
+import { useCallback } from "react";
 
 
 export function useCurrentUserId() {
@@ -8,6 +9,19 @@ export function useCurrentUserId() {
 
     return preferencesConfig?.currentUser;
 }
+
+export function useUpdateCurrentUser() {
+    const realm = useRealm();
+    const [preferencesConfig] = useQuery(PreferenceConfig)
+
+    const callback = useCallback((userId: Realm.BSON.ObjectId) => {
+        realm.write(() => {
+            preferencesConfig.currentUser = userId;
+        });
+    }, [realm]);
+    
+    return callback;
+};
 
 export function useCurrentUser() {
     const currentUserId = useCurrentUserId();
