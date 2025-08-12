@@ -7,6 +7,8 @@ import { router } from "expo-router";
 import { MonoText } from "../../components/library/StyledText";
 import { useCurrentUser, useUpdateCurrentUser } from "../../hooks/useCurrentUser";
 import { BSON } from 'realm';
+import { OperatorDefaults } from "../../constants/ConfigDefaults";
+import { Operator } from "../../constants/Enum";
 
 export default function SettingsMenuScreen() {
   const userConfig = useCurrentUser();
@@ -16,22 +18,35 @@ export default function SettingsMenuScreen() {
   const updateCurrentUser = useUpdateCurrentUser();
 
   const handleCreateUser = useCallback(() => {
-    const newUserId = new BSON.ObjectId();
+    const newUserId = new BSON.ObjectID();
     
     realm.write(() => {
+      // Create the user config
       realm.create('UserConfig', {
         _id: newUserId,
         name: newUserName,
         examTime: 60,
         showTimer: true,
       });
+
+      // Create default operator configs for all operators
+      Object.values(Operator).forEach((operator) => {
+        realm.create("OperatorConfig", {
+          _id: new BSON.ObjectID(),
+          enabled: true,
+          config: OperatorDefaults[operator],
+          operator,
+          userId: newUserId,
+        });
+      });
     });
+    
     setIsModalVisible(false);
     setNewUserName("");
 
     updateCurrentUser(newUserId);
     router.push("/");
-  }, [newUserName, realm]);
+  }, [newUserName, realm, updateCurrentUser]);
 
   return (
     <View style={styles.container}>

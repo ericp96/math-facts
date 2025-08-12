@@ -3,14 +3,42 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { View } from "../components/library/Themed";
 import LottieView from "lottie-react-native";
 import InlineTitle from "../components/library/InlineTitle";
-import React from "react";
+import React, { useState } from "react";
 import { MonoText } from "../components/library/StyledText";
 import { router } from "expo-router";
 import Button from "../components/library/Button";
-import { useCurrentUser } from "../hooks/useCurrentUser";
+import { useCurrentUser, useGetUsers, useUpdateCurrentUser } from "../hooks/useCurrentUser";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function Home() {
   const userConfig = useCurrentUser();
+  const users = useGetUsers();
+  const updateCurrentUser = useUpdateCurrentUser();
+
+  const [showSwitchUser, setShowSwitchUser] = useState(false);
+
+  const switchUserComponent = showSwitchUser ? (
+    <View style={styles.switchUserSection}>
+      <InlineTitle lightColor="#855797" darkColor="#855797">
+        Switch User dialog
+      </InlineTitle>
+      {users.map((user) => {
+        return (
+          <TouchableOpacity
+            key={user._id.toString()}
+            onPress={() => {
+              updateCurrentUser(user._id);
+              setShowSwitchUser(false);
+            }}
+          >
+            <MonoText lightColor="#000" darkColor="#000">
+              {user.name}
+            </MonoText>
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  ) : null;
 
   return (
     // @ts-expect-error
@@ -21,9 +49,16 @@ export default function Home() {
       loop
       resizeMode="cover"
     >
-      <InlineTitle lightColor="#855797" darkColor="#855797">
-        Hi, {userConfig?.name || "Kid"}.
-      </InlineTitle>
+      <View style={styles.userSection}>
+        <InlineTitle lightColor="#855797" darkColor="#855797">
+          Hi, {userConfig?.name || "Kid"}.
+        </InlineTitle>
+        <TouchableOpacity onPress={() => setShowSwitchUser(state => !state)} style={styles.switchUserIcon}>
+          <FontAwesome name="caret-down" size={24} color="#855797" />
+        </TouchableOpacity>
+      </View>
+      {switchUserComponent}
+
 
       <MonoText lightColor="#000" darkColor="#000">
         Let's Get Started
@@ -90,4 +125,32 @@ const styles = StyleSheet.create({
     margin: 8,
     alignItems: "center",
   },
+  userSection: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: 'transparent',
+  },
+  switchUserIcon: {
+    marginLeft: 10,
+  },
+  switchUserSection: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 10,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    zIndex: 5,
+  }
 });

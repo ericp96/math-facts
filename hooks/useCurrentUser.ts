@@ -30,3 +30,9 @@ export function useCurrentUser() {
 
     return userConfig;
 }
+
+export function useGetUsers() {
+    const configs = useQuery(UserConfig);
+
+    return configs;
+}
