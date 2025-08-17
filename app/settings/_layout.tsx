@@ -1,9 +1,4 @@
 import { Stack } from "expo-router";
-import { SafeAreaView, ScrollView } from "react-native";
-
-export const unstable_settings = {
-  initialRouteName: "index",
-};
 
 const backSettings = { headerBackVisible: true };
 
@@ -20,6 +15,10 @@ export default function SettingsLayoutNav() {
       <Stack.Screen
         name="profile"
         options={{ ...backSettings, title: "User Settings" }}
+      />
+      <Stack.Screen
+        name="users"
+        options={{ ...backSettings, title: "Users" }}
       />
       <Stack.Screen
         name="addition"

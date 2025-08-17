@@ -1,105 +1,15 @@
-import { StyleSheet, TouchableOpacity, Modal, TextInput, Switch } from "react-native";
-import { useCallback, useState } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { View } from "../../components/library/Themed";
-import { useRealm } from "@realm/react";
 import { router } from "expo-router";
 import { MonoText } from "../../components/library/StyledText";
-import { useCurrentUser, useUpdateCurrentUser } from "../../hooks/useCurrentUser";
-import { BSON } from 'realm';
-import { OperatorDefaults } from "../../constants/ConfigDefaults";
-import { Operator } from "../../constants/Enum";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 export default function SettingsMenuScreen() {
   const userConfig = useCurrentUser();
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [newUserName, setNewUserName] = useState("");
-  const realm = useRealm();
-  const updateCurrentUser = useUpdateCurrentUser();
-
-  const handleCreateUser = useCallback(() => {
-    const newUserId = new BSON.ObjectID();
-    
-    realm.write(() => {
-      // Create the user config
-      realm.create('UserConfig', {
-        _id: newUserId,
-        name: newUserName,
-        examTime: 60,
-        showTimer: true,
-      });
-
-      // Create default operator configs for all operators
-      Object.values(Operator).forEach((operator) => {
-        realm.create("OperatorConfig", {
-          _id: new BSON.ObjectID(),
-          enabled: true,
-          config: OperatorDefaults[operator],
-          operator,
-          userId: newUserId,
-        });
-      });
-    });
-    
-    setIsModalVisible(false);
-    setNewUserName("");
-
-    updateCurrentUser(newUserId);
-    router.push("/");
-  }, [newUserName, realm, updateCurrentUser]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileSection}>
-        <MonoText lightColor="#000" darkColor="#000">
-          {userConfig?.name}
-        </MonoText>
-        <TouchableOpacity onPress={() => setIsModalVisible(true)}>
-          <MonoText lightColor="#000" darkColor="#000">
-            Add Child
-          </MonoText>
-        </TouchableOpacity>
-      </View>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <MonoText style={styles.modalTitle}>Create New User</MonoText>
-            
-            <View style={styles.inputContainer}>
-              <MonoText>Name</MonoText>
-              <TextInput
-                style={styles.input}
-                value={newUserName}
-                onChangeText={setNewUserName}
-                placeholder="Enter name"
-              />
-            </View>
-
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setIsModalVisible(false)}
-              >
-                <MonoText>Cancel</MonoText>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.createButton]}
-                onPress={handleCreateUser}
-                disabled={!newUserName}
-              >
-                <MonoText lightColor="#fff" darkColor="#fff">Create</MonoText>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
       <TouchableOpacity
         onPress={() => {
           router.push("/settings/profile");
@@ -107,7 +17,18 @@ export default function SettingsMenuScreen() {
         style={styles.button}
       >
         <MonoText lightColor="#000" darkColor="#000">
-          User Settings
+          About {userConfig?.name}
+        </MonoText>
+      </TouchableOpacity>
+
+        <TouchableOpacity
+        onPress={() => {
+          router.push("/settings/users");
+        }}
+        style={styles.button}
+      >
+        <MonoText lightColor="#000" darkColor="#000">
+          Users
         </MonoText>
       </TouchableOpacity>
 
