@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, TextInput } from "react-native";
 import { useRealm } from "@realm/react";
 import { BSON } from "realm";
 import { router } from "expo-router";
-import { Button, FAB, IconButton, MD3Colors, Portal, Dialog, Searchbar } from "react-native-paper";
+import { Button, FAB, IconButton, MD3Colors, Portal, Dialog } from "react-native-paper";
 
 import { Text, View } from "../../components/library/Themed";
 import { useCurrentUser, useGetUsers, useUpdateCurrentUser } from "../../hooks/useCurrentUser";
@@ -49,31 +49,10 @@ export default function UsersScreen() {
   const users = useGetUsers();
   const currentUser = useCurrentUser();
   const updateCurrentUser = useUpdateCurrentUser();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState<"name" | "createdAt">("name");
   const [editingUser, setEditingUser] = useState<UserConfig | null>(null);
   const [userToDelete, setUserToDelete] = useState<UserConfig | null>(null);
   const [newUserName, setNewUserName] = useState("");
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-
-  const filteredUsers = useMemo(() => {
-    let result = Array.from(users);
-    
-    if (searchQuery) {
-      result = result.filter(user => 
-        user.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    
-    result.sort((a, b) => {
-      if (sortBy === "name") {
-        return a.name.localeCompare(b.name);
-      }
-      return 0; // Default to name sorting
-    });
-    
-    return result;
-  }, [users, searchQuery, sortBy]);
 
   const handleCreateUser = useCallback(() => {
     if (!newUserName.trim()) return;
@@ -131,22 +110,8 @@ export default function UsersScreen() {
 
   return (
     <View style={styles.container}>
-      <Searchbar
-        placeholder="Search users"
-        onChangeText={setSearchQuery}
-        value={searchQuery}
-        style={styles.searchBar}
-      />
-      
-      <Button
-        onPress={() => setSortBy(sortBy === "name" ? "createdAt" : "name")}
-        style={styles.sortButton}
-      >
-        Sort by: {sortBy === "name" ? "Name" : "Created"}
-      </Button>
-
       <FlatList
-        data={filteredUsers}
+        data={users}
         keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
           <UserItem
@@ -251,9 +216,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-  },
-  searchBar: {
-    marginBottom: 16,
   },
   sortButton: {
     marginBottom: 16,
