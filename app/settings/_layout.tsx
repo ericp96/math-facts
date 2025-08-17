@@ -19,7 +19,7 @@ export default function SettingsLayoutNav() {
       />
       <Stack.Screen
         name="profile"
-        options={{ ...backSettings, title: "User Information" }}
+        options={{ ...backSettings, title: "User Settings" }}
       />
       <Stack.Screen
         name="addition"

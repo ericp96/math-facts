@@ -1,27 +1,31 @@
-import 'react-native-get-random-values';
+import "react-native-get-random-values";
 
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import React, { useEffect } from 'react';
-import { AppRegistry, useColorScheme } from 'react-native';
-import { PaperProvider } from 'react-native-paper';
-import { RealmProvider, useQuery, useRealm } from '@realm/react';
-import { OperatorConfig } from '../models/OperatorConfigModel';
-import { UserConfig } from '../models/UserConfigModel';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import React, { useEffect, useRef } from "react";
+import { AppRegistry, useColorScheme } from "react-native";
+import { PaperProvider } from "react-native-paper";
+import { RealmProvider, useQuery, useRealm } from "@realm/react";
+import { OperatorConfig } from "../models/OperatorConfigModel";
+import { UserConfig } from "../models/UserConfigModel";
 import { OperatorDefaults } from "../constants/ConfigDefaults";
 import { Operator } from "../constants/Enum";
 import { BSON } from "realm";
-import { PreferenceConfig } from '../models/PreferenceConfigModel';
+import { PreferenceConfig } from "../models/PreferenceConfigModel";
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from "expo-router";
 
 export const unstable_settings = {
-  initialRouteName: 'index',
+  initialRouteName: "index",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -31,25 +35,34 @@ function useAppSetup() {
   const realm = useRealm();
   const operatorConfigs = useQuery(OperatorConfig);
   const users = useQuery(UserConfig);
+  const hasDoneSetup = useRef(false);
 
   useEffect(() => {
-    if (users.length === 1 
-      && operatorConfigs.length > 0 
-      && operatorConfigs.some(config => config.userId != users[0]._id)
+    if (hasDoneSetup.current) {
+      return;
+    }
+    hasDoneSetup.current = true;
+
+    // Set the operator config if it doesn't exist, migration for existing users
+    if (
+      users.length === 1 &&
+      operatorConfigs.length > 0 &&
+      operatorConfigs.some((config) => config.userId != users[0]._id)
     ) {
       realm.write(() => {
-        operatorConfigs.forEach(config => {
+        operatorConfigs.forEach((config) => {
           config.userId = users[0]._id;
-        })
+        });
 
-        realm.create('PreferenceConfig', {
+        realm.create("PreferenceConfig", {
           _id: new BSON.ObjectID(),
           currentUser: users[0]._id,
-        })
+        });
       });
     }
 
-    if (operatorConfigs.length === 0) {
+    // add operator configs for the first user if they don't exist
+    if (operatorConfigs.length === 0 && users.length === 0) {
       const userId = new BSON.ObjectID();
       realm.write(() => {
         Object.values(Operator).forEach((operator) => {
@@ -69,7 +82,7 @@ function useAppSetup() {
           showTimer: true,
         });
 
-        realm.create('PreferenceConfig', {
+        realm.create("PreferenceConfig", {
           _id: new BSON.ObjectID(),
           currentUser: users[0]._id,
         });
@@ -80,13 +93,13 @@ function useAppSetup() {
 
 function InitializeApp() {
   useAppSetup();
-  
+
   return null;
 }
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
 
@@ -108,20 +121,35 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
-const backSettings = { headerBackButtonDisplayMode: 'minimal', fullScreenGestureEnabled: true };
+const backSettings = {
+  headerBackButtonDisplayMode: "minimal",
+  fullScreenGestureEnabled: true,
+};
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
     <PaperProvider>
-      <RealmProvider schema={[UserConfig, OperatorConfig, PreferenceConfig]} schemaVersion={1} deleteRealmIfMigrationNeeded={true}>
+      <RealmProvider
+        schema={[UserConfig, OperatorConfig, PreferenceConfig]}
+        schemaVersion={1}
+        deleteRealmIfMigrationNeeded={true}
+      >
         <InitializeApp />
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
           <Stack initialRouteName="index">
             <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="practice" options={{ ...backSettings, title: 'Practice' }} />
-            <Stack.Screen name="exam" options={{ ...backSettings, title: 'Go!' }} />
+            <Stack.Screen
+              name="practice"
+              options={{ ...backSettings, title: "Practice" }}
+            />
+            <Stack.Screen
+              name="exam"
+              options={{ ...backSettings, title: "Go!" }}
+            />
             <Stack.Screen
               name="settings"
               options={{
@@ -135,5 +163,4 @@ function RootLayoutNav() {
   );
 }
 
-AppRegistry.registerComponent('Math Facts', () => RootLayout);
-
+AppRegistry.registerComponent("Math Facts", () => RootLayout);

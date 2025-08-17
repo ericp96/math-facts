@@ -19,24 +19,26 @@ export default function Home() {
 
   const switchUserComponent = showSwitchUser ? (
     <View style={styles.switchUserSection}>
-      <InlineTitle lightColor="#855797" darkColor="#855797">
-        Switch User dialog
+      <InlineTitle style={styles.title} lightColor="#855797" darkColor="#855797">
+        Switch User
       </InlineTitle>
-      {users.map((user) => {
-        return (
-          <TouchableOpacity
-            key={user._id.toString()}
-            onPress={() => {
-              updateCurrentUser(user._id);
-              setShowSwitchUser(false);
-            }}
-          >
-            <MonoText lightColor="#000" darkColor="#000">
-              {user.name}
-            </MonoText>
-          </TouchableOpacity>
-        );
-      })}
+      <View>
+        {users.map((user) => {
+          return (
+            <TouchableOpacity
+              key={user._id.toString()}
+              onPress={() => {
+                updateCurrentUser(user._id);
+                setShowSwitchUser(false);
+              }}
+            >
+              <MonoText lightColor="#000" darkColor="#000">
+                {user.name}
+              </MonoText>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   ) : null;
 
@@ -53,9 +55,11 @@ export default function Home() {
         <InlineTitle lightColor="#855797" darkColor="#855797">
           Hi, {userConfig?.name || "Kid"}.
         </InlineTitle>
-        <TouchableOpacity onPress={() => setShowSwitchUser(state => !state)} style={styles.switchUserIcon}>
-          <FontAwesome name="caret-down" size={24} color="#855797" />
-        </TouchableOpacity>
+        {users.length > 1 && (
+          <TouchableOpacity onPress={() => setShowSwitchUser(state => !state)} style={styles.switchUserIcon}>
+            <FontAwesome name="caret-down" size={24} color="#855797" />
+          </TouchableOpacity>
+        )}
       </View>
       {switchUserComponent}
 
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: 'white',
-    padding: 10,
+    padding: 15,
     margin: 10,
     borderRadius: 10,
     shadowColor: "#000",
@@ -152,5 +156,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     zIndex: 5,
-  }
+  },
+  title: {
+    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
 });

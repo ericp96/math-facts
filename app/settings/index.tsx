@@ -56,7 +56,7 @@ export default function SettingsMenuScreen() {
         </MonoText>
         <TouchableOpacity onPress={() => setIsModalVisible(true)}>
           <MonoText lightColor="#000" darkColor="#000">
-            Add Profile
+            Add Child
           </MonoText>
         </TouchableOpacity>
       </View>
@@ -107,7 +107,7 @@ export default function SettingsMenuScreen() {
         style={styles.button}
       >
         <MonoText lightColor="#000" darkColor="#000">
-          Profile
+          User Settings
         </MonoText>
       </TouchableOpacity>
 
