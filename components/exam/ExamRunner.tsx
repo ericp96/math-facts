@@ -1,12 +1,12 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { View } from "../library/Themed";
 import { Answer, Problem } from "../../constants/Types";
 import { useFetchProblem } from "../../hooks/useFetchProblem";
 import ProblemQuestion from "./ProblemQuestion";
-import { useQuery, useRealm } from "@realm/react";
-import { UserConfig } from "../../models/UserConfigModel";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { ProgressBar } from "react-native-paper";
+import Colors from "../../constants/Colors";
 
 type Milliseconds = number;
 type Seconds = number;
@@ -56,6 +56,7 @@ export default function ExamRunner({ onEnd, time }: {onEnd: (answers: Array<Answ
   }, [onEnd, answers])
 
   const timeRemaining = useTimer(time, handleEnd);
+  const progress = Math.max(0, 1 - (timeRemaining / time));
 
   const onNext = useCallback(
     (answer: number) => {
@@ -72,7 +73,10 @@ export default function ExamRunner({ onEnd, time }: {onEnd: (answers: Array<Answ
   return (
     <View style={styles.container}>
       {userConfig?.showTimer && (
-        <View><Text>{timeRemaining}</Text></View>
+        <View>
+          {/* <Text>{timeRemaining}</Text> */}
+          <ProgressBar progress={progress} color={Colors.theme.primaryColor} />
+        </View>
       )}
       <ProblemQuestion
         problem={problem}
