@@ -14,10 +14,9 @@ import { PaperProvider } from "react-native-paper";
 import { RealmProvider, useQuery, useRealm } from "@realm/react";
 import { OperatorConfig } from "../models/OperatorConfigModel";
 import { UserConfig } from "../models/UserConfigModel";
-import { OperatorDefaults } from "../constants/ConfigDefaults";
-import { Operator } from "../constants/Enum";
 import { BSON } from "realm";
 import { PreferenceConfig } from "../models/PreferenceConfigModel";
+import { useNeedsOnboarding } from "../hooks/useOnboarding";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -61,38 +60,30 @@ function useAppSetup() {
       });
     }
 
-    // add operator configs for the first user if they don't exist
-    if (operatorConfigs.length === 0 && users.length === 0) {
-      const userId = new BSON.ObjectID();
-      realm.write(() => {
-        Object.values(Operator).forEach((operator) => {
-          realm.create("OperatorConfig", {
+    // Migration: Fix PreferenceConfig that has invalid currentUser
+    if (users.length > 0 && operatorConfigs.length > 0) {
+      const preferences = realm.objects("PreferenceConfig");
+      if (preferences.length > 0) {
+        const pref = preferences[0] as any;
+        if (!users.some(user => user._id.equals(pref.currentUser))) {
+          realm.write(() => {
+            pref.currentUser = users[0]._id;
+          });
+        }
+      } else {
+        realm.write(() => {
+          realm.create("PreferenceConfig", {
             _id: new BSON.ObjectID(),
-            enabled: true,
-            config: OperatorDefaults[operator],
-            operator,
-            userId,
+            currentUser: users[0]._id,
           });
         });
-
-        realm.create("UserConfig", {
-          _id: userId,
-          name: "Kid",
-          examTime: 60,
-          showTimer: true,
-        });
-
-        realm.create("PreferenceConfig", {
-          _id: new BSON.ObjectID(),
-          currentUser: users[0]._id,
-        });
-      });
+      }
     }
   }, [realm, operatorConfigs, users]);
 }
 
 function InitializeApp() {
-  useAppSetup();
+  // useAppSetup();
 
   return null;
 }
@@ -126,6 +117,37 @@ const backSettings = {
   fullScreenGestureEnabled: true,
 };
 
+function AppNavigator() {
+  const needsOnboarding = useNeedsOnboarding();
+
+  return (
+    <Stack initialRouteName={needsOnboarding ? "onboarding" : "index"}>
+      <Stack.Screen 
+        name="onboarding" 
+        options={{ 
+          headerShown: false,
+          gestureEnabled: false,
+        }} 
+      />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="practice"
+        options={{ ...backSettings, title: "Practice" }}
+      />
+      <Stack.Screen
+        name="exam"
+        options={{ ...backSettings, title: "Go!" }}
+      />
+      <Stack.Screen
+        name="settings"
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack>
+  );
+}
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
@@ -140,23 +162,7 @@ function RootLayoutNav() {
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
-          <Stack initialRouteName="index">
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="practice"
-              options={{ ...backSettings, title: "Practice" }}
-            />
-            <Stack.Screen
-              name="exam"
-              options={{ ...backSettings, title: "Go!" }}
-            />
-            <Stack.Screen
-              name="settings"
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack>
+          <AppNavigator />
         </ThemeProvider>
       </RealmProvider>
     </PaperProvider>

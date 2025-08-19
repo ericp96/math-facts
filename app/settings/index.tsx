@@ -28,7 +28,7 @@ export default function SettingsMenuScreen() {
         style={styles.button}
       >
         <MonoText lightColor="#000" darkColor="#000">
-          Users
+          Manage Users
         </MonoText>
       </TouchableOpacity>
 
