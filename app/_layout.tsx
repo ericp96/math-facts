@@ -8,13 +8,12 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { AppRegistry, useColorScheme } from "react-native";
 import { PaperProvider } from "react-native-paper";
-import { RealmProvider, useQuery, useRealm } from "@realm/react";
+import { RealmProvider } from "@realm/react";
 import { OperatorConfig } from "../models/OperatorConfigModel";
 import { UserConfig } from "../models/UserConfigModel";
-import { BSON } from "realm";
 import { PreferenceConfig } from "../models/PreferenceConfigModel";
 import { useNeedsOnboarding } from "../hooks/useOnboarding";
 
@@ -29,64 +28,6 @@ export const unstable_settings = {
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
-
-function useAppSetup() {
-  const realm = useRealm();
-  const operatorConfigs = useQuery(OperatorConfig);
-  const users = useQuery(UserConfig);
-  const hasDoneSetup = useRef(false);
-
-  useEffect(() => {
-    if (hasDoneSetup.current) {
-      return;
-    }
-    hasDoneSetup.current = true;
-
-    // Set the operator config if it doesn't exist, migration for existing users
-    if (
-      users.length === 1 &&
-      operatorConfigs.length > 0 &&
-      operatorConfigs.some((config) => config.userId != users[0]._id)
-    ) {
-      realm.write(() => {
-        operatorConfigs.forEach((config) => {
-          config.userId = users[0]._id;
-        });
-
-        realm.create("PreferenceConfig", {
-          _id: new BSON.ObjectID(),
-          currentUser: users[0]._id,
-        });
-      });
-    }
-
-    // Migration: Fix PreferenceConfig that has invalid currentUser
-    if (users.length > 0 && operatorConfigs.length > 0) {
-      const preferences = realm.objects("PreferenceConfig");
-      if (preferences.length > 0) {
-        const pref = preferences[0] as any;
-        if (!users.some(user => user._id.equals(pref.currentUser))) {
-          realm.write(() => {
-            pref.currentUser = users[0]._id;
-          });
-        }
-      } else {
-        realm.write(() => {
-          realm.create("PreferenceConfig", {
-            _id: new BSON.ObjectID(),
-            currentUser: users[0]._id,
-          });
-        });
-      }
-    }
-  }, [realm, operatorConfigs, users]);
-}
-
-function InitializeApp() {
-  // useAppSetup();
-
-  return null;
-}
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -158,7 +99,6 @@ function RootLayoutNav() {
         schemaVersion={1}
         deleteRealmIfMigrationNeeded={true}
       >
-        <InitializeApp />
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         >
