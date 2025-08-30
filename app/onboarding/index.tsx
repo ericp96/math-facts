@@ -20,7 +20,7 @@ export default function OnboardingWelcome() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
           <InlineTitle style={styles.title} lightColor="#855797" darkColor="#855797">
-            Welcome to Math Facts!
+            Welcome to ekho math!
           </InlineTitle>
           
           <MonoText style={styles.subtitle} lightColor="#000" darkColor="#000">

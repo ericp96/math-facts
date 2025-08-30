@@ -19,9 +19,7 @@ import { useNeedsOnboarding } from "../hooks/useOnboarding";
 
 export { ErrorBoundary } from "expo-router";
 
-export const unstable_settings = {
-  initialRouteName: "index",
-};
+import { router } from "expo-router";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,9 +31,19 @@ const backSettings = {
 
 function AppNavigator() {
   const needsOnboarding = useNeedsOnboarding();
+  const initialRouteName = needsOnboarding ? "onboarding" : "index";
+
+  console.log("Needs onboarding: ", needsOnboarding, initialRouteName);
+
+  useEffect(() => {
+    if (needsOnboarding) {
+      router.replace("/onboarding");
+    }
+  }, [needsOnboarding]);
 
   return (
-    <Stack initialRouteName={needsOnboarding ? "onboarding" : "index"}>
+    <Stack initialRouteName={initialRouteName}>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen 
         name="onboarding" 
         options={{ 
@@ -43,7 +51,6 @@ function AppNavigator() {
           gestureEnabled: false,
         }} 
       />
-      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
         name="practice"
         options={{ ...backSettings, title: "Practice" }}
@@ -70,7 +77,6 @@ function RootLayoutNav() {
       <RealmProvider
         schema={[UserConfig, OperatorConfig, PreferenceConfig]}
         schemaVersion={1}
-        deleteRealmIfMigrationNeeded={true}
       >
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
@@ -106,4 +112,4 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
-AppRegistry.registerComponent("Math Facts", () => RootLayout);
+AppRegistry.registerComponent("ekho math", () => RootLayout);
