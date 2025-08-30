@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import { Switch } from 'react-native-paper';
+import { Switch, Chip } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import { View } from '../../components/library/Themed';
 import InlineTitle from '../../components/library/InlineTitle';
 import { MonoText } from '../../components/library/StyledText';
 import Button from '../../components/library/Button';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Slider } from '@react-native-assets/slider';
+
+const times = [15, 20, 30, 40, 50, 60, 90, 120];
 
 export default function OnboardingPreferences() {
   const { name } = useLocalSearchParams<{ name: string }>();
@@ -64,19 +65,20 @@ export default function OnboardingPreferences() {
 
             <View style={styles.settingSection}>
               <MonoText style={styles.settingLabel} lightColor="#000" darkColor="#000">
-                Exam time: {examTime} seconds
+                Exam time
               </MonoText>
-              <Slider
-                style={styles.slider}
-                value={examTime}
-                onValueChange={setExamTime}
-                min={30}
-                max={300}
-                step={30}
-                trackStyle={{ backgroundColor: '#ccc' }}
-                selectedTrackStyle={{ backgroundColor: '#855797' }}
-                thumbStyle={{ backgroundColor: '#855797' }}
-              />
+              <View style={styles.chipWrapper}>
+                {times.map((seconds) => (
+                  <Chip
+                    style={styles.chipStyle}
+                    onPress={() => setExamTime(seconds)}
+                    selected={examTime === seconds}
+                    key={seconds}
+                  >
+                    {`${seconds}s`}
+                  </Chip>
+                ))}
+              </View>
             </View>
           </View>
 
@@ -147,9 +149,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  slider: {
-    width: '100%',
-    height: 40,
+  chipWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'transparent',
+    marginTop: 10,
+  },
+  chipStyle: {
+    marginRight: 5,
+    marginBottom: 5,
   },
   buttonContainer: {
     width: '100%',
